@@ -124,7 +124,7 @@ nnoremap <silent> <F8> :NERDTreeToggle<cr>
 
 """""""""
 "" haskell mode
-au BufEnter *.hs compiler ghc
+" au BufEnter *.hs compiler ghc
 let g:haddock_browser="/usr/bin/chromium"
 let g:haddock_docdir="/home/dave/code/doc/haskell/libraries"
 let g:haddock_indexfiledir="/home/dave/.haddock_index"
