@@ -1,0 +1,62 @@
++|.................// set up bucket lists across goals //---|{{{
+ |TODO|  set up bucket lists across goals
+
++|.............// ca1dbd73-6b31-4a1d-92a9-df0eb7bd85f1 //---|}}}
+
++|..............................// additional snippets //---|{{{
+ |TODO|  additional snippets
+    should have 
+        |AAA| : 
+        |aaa|
+        | a |
+        |TODO|
+        |todo|
++|.............// b622ced2-6375-48e0-9b79-f2c4b2b851b2 //---|}}}
+
++|.................................// git binary files //---|{{{
+ |TODO|  git binary files
+are they ok? how to do them? Size on github?
++|.............// 12e6228c-4fe8-4c98-8e71-c6a0272f88a9 //---|}}}
+
+##############################################
+## general interest web pages
+#####--------------------------------------{{{
+
+
+#########
+## news
+
+- http://en.wikipedia.org/wiki/Portal:Current_events
+- http://nplusonemag.com/
+- http://opendemocracy.net/
+- http://www.prospectmagazine.co.uk/
+- http://www.aldaily.com/
+- http://www.theamericanconservative.com/
+
+#########
+## check it out
+
+- http://noexcuselist.com/
+- http://www.udacity.com/
+- http://projecteuler.net/
+- http://www.foreignaffairs.com/features/readinglists/what-to-read-on-american-primacy
+- http://lesswrong.com/about/
+- http://stackoverflow.com/questions/1012573/getting-started-with-haskell
+- http://thesciencenetwork.org/
+- [text book list](http://lesswrong.com/lw/3gu/the_best_textbooks_on_every_subject/)
+- http://worrydream.com/#!/MagicInk
+- http://www.nand2tetris.org/
+
+#########
+## handy
+
+[Cast Iron](http://sherylcanter.com/wordpress/2010/01/a-science-based-technique-for-seasoning-cast-iron/)
+
+#########
+## download me
+- dilute
+
+
+#####------------------||------------------}}}
+## end: general interest web pages
+##############################################

@@ -1,0 +1,10 @@
+///////////////////////-|-|  |-|-/
+// general ignores
+.*.swp
+.*.log
+.config/[cC]hromium
+.config/transmission
+.config/ranger/history
+// end: general ignores
+///////////////////////-----------------------/
+
