@@ -37,3 +37,6 @@
 [submodule "code/base"]
 	path = code/base
 	url = https://github.com/caryatid/base.git
+[submodule ".vim/bundle/vim2hs"]
+	path = .vim/bundle/vim2hs
+	url = git://github.com/dag/vim2hs.git

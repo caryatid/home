@@ -27,12 +27,10 @@ set background=light
 " colorscheme rainbow_fruit
 " colorscheme soso
 " colorscheme rainbow_fine_blue
-colorscheme dusk
-" colorscheme rainbow_neon
+colorscheme rainbow_neon
 " colorscheme wombat
 " colorscheme beachcomber
 set nocursorline
-set nocursorcolumn
 set autochdir
 if has("gui_running")
     if has("gui_gtk")

@@ -21,7 +21,7 @@ scratchpads = [
     NS "htop" (myTerminal ++ " -e htop -T htop") (title =? "htop") 
         (customFloating $ W.RationalRect (0) (0) (1/2) (1/2) ),
     NS "term" (myTerminal ++ " --role scratch") (role =? "scratch") 
-        (customFloating $ W.RationalRect (0) (1/2) 1 (19/40) ),
+        (customFloating $ W.RationalRect (0) (1/2) 1 (1/2) ),
     NS "notes" ("gvim -i NONE " ++ "-c \"set viminfo=\" " ++ "--role notes ~/bucket_list.txt") (role =? "notes") 
         (customFloating $ W.RationalRect (0) (0) 1 (1/2) ),
     NS "mpc"   (myTerminal ++ " -e ncmpc -T ncmpc") (title =? "ncmpc") 
@@ -39,7 +39,7 @@ myFocusFollowsMouse = True
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 2
+myBorderWidth   = 1
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -62,7 +62,7 @@ myWorkspaces    = ["code","doc","journal","comm","media","beethoven","dvorak","w
 -- Border colors for unfocused and focused windows, respectively.
 --
 myNormalBorderColor  = "#222222"
-myFocusedBorderColor = "#8888ee"
+myFocusedBorderColor = "#ccccee"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -142,12 +142,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm    , xK_i),    namedScratchpadAction scratchpads "term")
     , ((modm    , xK_n),    namedScratchpadAction scratchpads "notes")
     , ((modm    , xK_m),    namedScratchpadAction scratchpads "mpc")
-    -- mpc commands
-    , ((modm .|. shiftMask, xK_p),  spawn "mpc toggle")
-    , ((modm .|. shiftMask, xK_period), spawn "mpc next")
-    , ((modm .|. shiftMask, xK_comma), spawn "mpc prev")
-    , ((modm , xK_d), spawn "runhaskell /home/dave/code/base/wacom.hs 0")
-    , ((modm , xK_s), spawn "runhaskell /home/dave/code/base/wacom.hs 1")
     ]
     ++
 
