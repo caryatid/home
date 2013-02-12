@@ -6,6 +6,7 @@
 .config/transmission
 .config/ranger/history
 .config/geany/*_0
+.vim
 // end: general ignores
 ///////////////////////-----------------------/
 
