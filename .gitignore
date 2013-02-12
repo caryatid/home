@@ -5,6 +5,7 @@
 .config/[cC]hromium
 .config/transmission
 .config/ranger/history
+.config/geany/*_0
 // end: general ignores
 ///////////////////////-----------------------/
 
