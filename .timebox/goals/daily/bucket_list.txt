@@ -1,14 +1,3 @@
-+|..................// git checkout with removed files //---|{{{
- |TODO|  git checkout with removed files
-accidently checked in .gitconfig then git rm'd it, so pulls remove it.
-get it back
-+|.............// af64cfad-126e-4628-ad94-825442c6221a //---|}}}
-
-+|.................................// git binary files //---|{{{
- |TODO|  git binary files
-are they ok? how to do them? Size on github?
-+|.............// 12e6228c-4fe8-4c98-8e71-c6a0272f88a9 //---|}}}
-
 ##############################################
 ## general interest web pages
 #####--------------------------------------{{{
@@ -43,8 +32,12 @@ are they ok? how to do them? Size on github?
 
 [Cast Iron](http://sherylcanter.com/wordpress/2010/01/a-science-based-technique-for-seasoning-cast-iron/)
 
-#########
-## download me
++-----------------------// Download Me // ---
+ | TODO | Download me. do it. k.
+ 
+
+
++-----
 - dilute
 
 
