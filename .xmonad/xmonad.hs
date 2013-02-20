@@ -11,11 +11,19 @@ import XMonad
 import Data.Monoid
 import XMonad.Hooks.DynamicLog
 import System.Exit
-
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import XMonad.ManageHook
+import XMonad.Layout.Groups.Examples
+import qualified XMonad.Layout.Groups      as G
 import XMonad.Util.NamedScratchpad
+import XMonad.Prompt
+import XMonad.Prompt.Shell
+import XMonad.Layout.Groups.Helpers
+
+-- | TODO | XMonad.Prompt may be of use to find window by string
+----------------------------------------------------------------
+
 
 scratchpads = [
     NS "htop" (myTerminal ++ " -e htop -T htop") (title =? "htop") 
@@ -91,13 +99,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_n     ), refresh)
 
     -- Move focus to the next window
-    , ((modm,               xK_Tab   ), windows W.focusDown)
+    , ((modm,               xK_Tab   ), focusDown) -- windows W.focusDown)
 
     -- Move focus to the next window
-    , ((modm,               xK_j     ), windows W.focusDown)
+    , ((modm,               xK_j     ), focusDown) -- windows W.focusDown)
 
     -- Move focus to the previous window
-    , ((modm,               xK_k     ), windows W.focusUp  )
+    , ((modm,               xK_k     ), focusUp) -- windows W.focusUp  )
 
     -- Move focus to the master window
     , ((modm,               xK_m     ), windows W.focusMaster  )
@@ -138,10 +146,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
     -- XMonad.Util.NamedScratchpad
-    , ((modm    , xK_u),    namedScratchpadAction scratchpads "htop")
-    , ((modm    , xK_i),    namedScratchpadAction scratchpads "term")
-    , ((modm    , xK_n),    namedScratchpadAction scratchpads "notes")
-    , ((modm    , xK_m),    namedScratchpadAction scratchpads "mpc")
+    , ((modm    , xK_x),    shellPrompt defaultXPConfig) 
+    , ((modm    , xK_i),    increaseNMasterGroups) 
+    , ((modm    , xK_o),    decreaseNMasterGroups) 
+    , ((modm    , xK_u),    expandMasterGroups) 
+    , ((modm    , xK_p),    shrinkMasterGroups) 
+    , ((modm    , xK_n),    nextOuterLayout) 
+    -- XMonad.Layout.Groups.Helpers
+    , ((modm    , xK_s),    splitGroup) 
+    , ((modm    , xK_d),    focusGroupDown) 
+    , ((modm    , xK_a),    focusGroupUp) 
     ]
     ++
 
@@ -193,7 +207,8 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = tiled ||| Mirror tiled ||| Full
+myLayout = tallTabs defaultTiledTabsConfig 
+-- ||| tiled ||| Mirror tiled ||| Full
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio

@@ -1,3 +1,14 @@
+| TODO | figure out layout for xmonad where one window cycles
+-------------------------------------------------------------
+  IDEAS | 
+  ------- 
+    string match for window selection
+     -- would benefit from ability to name windows explicitly
+  CURRENT |
+  ---------
+    each window can cycle all available windows 
+     -- swaps with any that are visible
+
 ##############################################
 ## general interest web pages
 #####--------------------------------------{{{
