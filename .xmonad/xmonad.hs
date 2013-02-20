@@ -39,7 +39,7 @@ scratchpads = [
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "roxterm"
+myTerminal      = "urxvtc -rv"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -145,17 +145,21 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
-    -- XMonad.Util.NamedScratchpad
+
     , ((modm    , xK_x),    shellPrompt defaultXPConfig) 
-    , ((modm    , xK_i),    increaseNMasterGroups) 
-    , ((modm    , xK_o),    decreaseNMasterGroups) 
-    , ((modm    , xK_u),    expandMasterGroups) 
-    , ((modm    , xK_p),    shrinkMasterGroups) 
-    , ((modm    , xK_n),    nextOuterLayout) 
+--    , ((modm    , xK_=),    increaseNMasterGroups) 
+ --   , ((modm    , xK_-),    decreaseNMasterGroups) 
+    , ((modm    , xK_l),    expandMasterGroups) 
+    , ((modm    , xK_h),    shrinkMasterGroups) 
+    , ((modm    , xK_space),    nextOuterLayout) 
     -- XMonad.Layout.Groups.Helpers
     , ((modm    , xK_s),    splitGroup) 
-    , ((modm    , xK_d),    focusGroupDown) 
-    , ((modm    , xK_a),    focusGroupUp) 
+    , ((modm .|. shiftMask   , xK_j),    focusGroupDown) 
+    , ((modm .|. shiftMask   , xK_k),    focusGroupUp) 
+    , ((modm    , xK_n),    swapGroupUp) 
+    , ((modm    , xK_p),    swapGroupDown) 
+    , ((modm    , xK_comma),    moveToGroupUp True) 
+    , ((modm    , xK_period),    moveToGroupDown True) 
     ]
     ++
 
