@@ -25,6 +25,8 @@ import XMonad.Layout.Groups.Helpers
 -- | TODO | XMonad.Prompt may be of use to find window by string
 ----------------------------------------------------------------
 
+-- | TODO | Generally clean up imports and calls. Xmonad.Groups.Examples and ilk
+--------------------------------------------------------------------------------
 
 scratchpads = [
     NS "htop" (myTerminal ++ " -e htop -T htop") (title =? "htop") 
@@ -37,6 +39,7 @@ scratchpads = [
         (customFloating $ W.RationalRect (1/2) (1/2) (1/2) (1/2) )
 
     ] where role = stringProperty "WM_WINDOW_ROLE"
+
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
@@ -48,7 +51,7 @@ myFocusFollowsMouse = True
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 1
+myBorderWidth   = 3
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -103,10 +106,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_Tab   ), focusDown) -- windows W.focusDown)
 
     -- Move focus to the next window
-    , ((modm,               xK_j     ), focusDown) -- windows W.focusDown)
+    , ((modm .|. shiftMask,               xK_j     ), focusDown) -- windows W.focusDown)
 
     -- Move focus to the previous window
-    , ((modm,               xK_k     ), focusUp) -- windows W.focusUp  )
+    , ((modm .|. shiftMask,               xK_k     ), focusUp) -- windows W.focusUp  )
 
     -- Move focus to the master window
     , ((modm,               xK_m     ), windows W.focusMaster  )
@@ -115,10 +118,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_Return), windows W.swapMaster)
 
     -- Swap the focused window with the next window
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+--    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
 
     -- Swap the focused window with the previous window
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+ ----   , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
 
     -- Shrink the master area
     , ((modm,               xK_h     ), sendMessage Shrink)
@@ -148,17 +151,18 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
 
     , ((modm    , xK_x),    shellPrompt defaultXPConfig) 
---    , ((modm    , xK_=),    increaseNMasterGroups) 
- --   , ((modm    , xK_-),    decreaseNMasterGroups) 
+
+        
+    , ((modm    , xK_period),    increaseNMasterGroups) 
+    , ((modm    , xK_comma),    decreaseNMasterGroups) 
     , ((modm    , xK_l),    expandMasterGroups) 
     , ((modm    , xK_h),    shrinkMasterGroups) 
     , ((modm    , xK_space),    nextOuterLayout) 
     -- XMonad.Layout.Groups.Helpers
     , ((modm    , xK_s),    splitGroup) 
-    , ((modm .|. shiftMask   , xK_j),    focusGroupDown) 
-    , ((modm .|. shiftMask   , xK_k),    focusGroupUp) 
-    , ((modm    , xK_n),    swapGroupUp) 
-    , ((modm    , xK_p),    swapGroupDown) 
+    , ((modm    , xK_j),    focusGroupDown) 
+    , ((modm    , xK_k),    focusGroupUp) 
+    , ((modm    , xK_Return),    swapGroupMaster) 
     , ((modm    , xK_comma),    moveToGroupUp True) 
     , ((modm    , xK_period),    moveToGroupDown True) 
     ]

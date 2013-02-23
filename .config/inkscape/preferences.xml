@@ -133,8 +133,8 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="0"
-         height="0"
+         width="163.54954528808594"
+         height="163.76535034179688"
          rx="0"
          ry="0" />
       <eventcontext
@@ -210,16 +210,16 @@
     <eventcontext
        id="calligraphic"
        style="fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none;"
-       mass="0"
-       angle="46"
-       width="51"
-       thinning="0"
-       flatness="12"
+       mass="2"
+       angle="30"
+       width="10"
+       thinning="10"
+       flatness="90"
        cap_rounding="0"
        usecurrent="1"
-       tracebackground="1"
+       tracebackground="0"
        usepressure="1"
-       usetilt="0"
+       usetilt="1"
        keep_selected="1"
        selcue="0"
        wiggle="0"
@@ -354,8 +354,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="0"
-       y="0"
+       x="42.740461602779916"
+       y="936.230227915966"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -555,7 +555,7 @@
        x="0"
        y="0"
        w="410"
-       h="1542"
+       h="434"
        state="2" />
     <group
        id="filtereffects" />
@@ -565,7 +565,16 @@
        id="transformation"
        applyseparately="0" />
     <group
-       id="align" />
+       id="align"
+       panel_size="1"
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       x="0"
+       y="0"
+       w="410"
+       h="368"
+       state="2" />
     <group
        id="xml" />
     <group
@@ -587,10 +596,10 @@
        panel_ratio="100"
        panel_mode="1"
        panel_wrap="0"
-       x="1172"
-       y="357"
-       w="880"
-       h="963" />
+       x="1322"
+       y="267"
+       w="362"
+       h="172" />
     <group
        id="gradienteditor" />
     <group
@@ -672,16 +681,16 @@
        on-blur="0.50"
        animate-time="100" />
     <group
-       id="inputdevices"
-       panel_size="1"
-       panel_ratio="100"
-       panel_mode="1"
-       panel_wrap="0"
-       x="0"
-       y="0"
-       w="525"
+       state="2"
        h="225"
-       state="2" />
+       w="525"
+       y="0"
+       x="0"
+       panel_wrap="0"
+       panel_mode="1"
+       panel_ratio="100"
+       panel_size="1"
+       id="inputdevices" />
   </group>
   <group
      id="printing">
@@ -958,7 +967,7 @@
      id="extensions" />
   <group
      id="desktop"
-     style="fill:#0b280b;opacity:0.87940003000000000;fill-opacity:1;stroke-width:0.40000001000000002;stroke-miterlimit:0.80000000000000004;stroke-dasharray:none;stroke:#176850;stroke-opacity:0.39583334;stroke-linecap:round;stroke-linejoin:round">
+     style="fill:#d45500;opacity:1;fill-opacity:1;stroke-width:0.59999999999999998;stroke-miterlimit:0.80000000999999998;stroke-dasharray:none;stroke:#081ca4;stroke-opacity:0.98263924999999996;stroke-linecap:round;stroke-linejoin:round">
     <group
        width="1078"
        height="1884"
@@ -983,25 +992,25 @@
   <group
      id="devices">
     <group
-       id="P:Wacom Bamboo 16FG 4x5 Pen stylus"
+       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+       axes="x;y;pressure;xtilt;ytilt;wheel"
        mode="screen"
-       axes="x;y;pressure;xtilt;ytilt;wheel"
-       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;" />
+       id="P:Wacom Bamboo 16FG 4x5 Pen stylus" />
     <group
-       id="P:Wacom Bamboo 16FG 4x5 Finger touch"
-       mode="disabled"
+       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
        axes="x;y;pressure;xtilt;ytilt;wheel"
-       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;" />
+       mode="disabled"
+       id="P:Wacom Bamboo 16FG 4x5 Finger touch" />
     <group
-       id="E:Wacom Bamboo 16FG 4x5 Pen eraser"
-       mode="disabled"
+       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
        axes="x;y;pressure;xtilt;ytilt;wheel"
-       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;" />
+       mode="disabled"
+       id="E:Wacom Bamboo 16FG 4x5 Pen eraser" />
     <group
-       id="P:Wacom Bamboo 16FG 4x5 Finger pad"
-       mode="disabled"
+       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
        axes="x;y;pressure;xtilt;ytilt;wheel"
-       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;" />
+       mode="disabled"
+       id="P:Wacom Bamboo 16FG 4x5 Finger pad" />
   </group>
   <group
      id="toolbox"
