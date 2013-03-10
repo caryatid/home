@@ -133,8 +133,8 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="163.54954528808594"
-         height="163.76535034179688"
+         width="15"
+         height="15"
          rx="0"
          ry="0" />
       <eventcontext
@@ -174,12 +174,13 @@
          usecurrent="1" />
       <eventcontext
          id="star"
-         magnitude="5"
+         magnitude="4"
          style="fill:yellow;"
          usecurrent="1"
          proportion="0.5"
          rounded="0"
-         randomized="0" />
+         randomized="0"
+         isflatsided="1" />
       <eventcontext
          id="spiral"
          style="fill:none;"
@@ -209,12 +210,12 @@
     </group>
     <eventcontext
        id="calligraphic"
-       style="fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none;"
+       style="opacity:0.71686108000000004;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#2d4ea6;stroke-width:0.34499999999999997;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0.80000000999999998;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        mass="2"
        angle="30"
-       width="10"
+       width="7.9999999999999991"
        thinning="10"
-       flatness="90"
+       flatness="88"
        cap_rounding="0"
        usecurrent="1"
        tracebackground="0"
@@ -354,8 +355,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="42.740461602779916"
-       y="936.230227915966"
+       x="0"
+       y="0"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -552,33 +553,47 @@
        panel_ratio="100"
        panel_mode="1"
        panel_wrap="0"
-       x="0"
-       y="0"
-       w="410"
-       h="434"
-       state="2" />
+       x="1415"
+       y="266"
+       w="1074"
+       h="1900"
+       state="1" />
     <group
        id="filtereffects" />
     <group
        id="textandfont" />
     <group
        id="transformation"
-       applyseparately="0" />
+       applyseparately="1"
+       panel_size="1"
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       state="1"
+       x="1080"
+       y="1330"
+       w="1074"
+       h="584" />
     <group
        id="align"
        panel_size="1"
        panel_ratio="100"
        panel_mode="1"
        panel_wrap="0"
-       x="0"
-       y="0"
-       w="410"
-       h="368"
-       state="2" />
+       x="1080"
+       y="1330"
+       w="1074"
+       h="584"
+       state="1"
+       align-to="6" />
     <group
        id="xml" />
     <group
-       id="find" />
+       id="find"
+       x="1491"
+       y="833"
+       w="258"
+       h="254" />
     <group
        id="spellcheck"
        w="200"
@@ -587,23 +602,35 @@
        ignorenumbers="1" />
     <group
        id="documentoptions"
-       state="1" />
-    <group
-       id="preferences"
        state="1"
-       page="14"
        panel_size="1"
        panel_ratio="100"
        panel_mode="1"
        panel_wrap="0"
-       x="1322"
-       y="267"
-       w="362"
-       h="172" />
+       x="1341"
+       y="698"
+       w="549"
+       h="532" />
+    <group
+       id="preferences"
+       state="1"
+       page="38"
+       panel_size="1"
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       x="7"
+       y="31"
+       w="1066"
+       h="1242" />
     <group
        id="gradienteditor" />
     <group
-       id="object" />
+       id="object"
+       x="1495"
+       y="652"
+       w="268"
+       h="196" />
     <group
        id="export"
        default=""
@@ -619,7 +646,7 @@
        default="org.inkscape.output.svg.inkscape"
        append_extension="1"
        enable_preview="1"
-       path=""
+       path="/home/dave/.timebox/journal"
        use_current_dir="1" />
     <group
        id="save_copy"
@@ -639,9 +666,43 @@
        id="debug"
        redirect="0" />
     <group
-       id="clonetiler" />
+       id="clonetiler"
+       fillrect="0"
+       x="1422"
+       y="405"
+       w="570"
+       h="466"
+       jmax="3"
+       imax="3"
+       rotate_per_j="0"
+       rotate_alternatej="0"
+       symmetrygroup="0"
+       hue_per_j="0"
+       color_alternatej="0"
+       saturation_per_j="0"
+       scalex_per_j="0"
+       blur_per_j="0"
+       shiftx_per_j="0"
+       shifty_per_j="0"
+       shiftx_per_i="0"
+       shifty_per_i="0" />
     <group
-       id="gridtiler" />
+       id="gridtiler"
+       panel_size="1"
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       VertAlign="1"
+       HorizAlign="1"
+       SpacingType="-20"
+       NoOfCols="1"
+       state="1"
+       x="1080"
+       y="1330"
+       w="1074"
+       h="584"
+       YPad="7.6000000000000245"
+       XPad="8.2000000000000242" />
     <group
        id="extension-error"
        show-on-startup="0" />
@@ -681,16 +742,16 @@
        on-blur="0.50"
        animate-time="100" />
     <group
-       state="2"
-       h="225"
-       w="525"
-       y="0"
-       x="0"
-       panel_wrap="0"
-       panel_mode="1"
-       panel_ratio="100"
+       id="inputdevices"
        panel_size="1"
-       id="inputdevices" />
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       x="0"
+       y="0"
+       w="525"
+       h="225"
+       state="2" />
   </group>
   <group
      id="printing">
@@ -752,7 +813,7 @@
        uri="" />
     <group
        id="savewindowgeometry"
-       value="1" />
+       value="0" />
     <group
        id="defaultoffsetwidth"
        value="2" />
@@ -820,7 +881,7 @@
        value="1" />
     <group
        id="dialogtype"
-       value="1" />
+       value="0" />
     <group
        id="dock"
        cancenterdock="1"
@@ -964,15 +1025,46 @@
        numthreads="1" />
   </group>
   <group
-     id="extensions" />
+     id="extensions"
+     grid.cartesian.x_divs="6"
+     grid.cartesian.dx="100"
+     grid.cartesian.x_subdivs="2"
+     grid.cartesian.x_subsubdivs="5"
+     grid.cartesian.x_half_freq="4"
+     grid.cartesian.x_divs_th="2"
+     grid.cartesian.x_subdivs_th="1"
+     grid.cartesian.x_subsubdivs_th="0.30000001192092896"
+     grid.cartesian.y_divs="5"
+     grid.cartesian.dy="100"
+     grid.cartesian.y_subdivs="1"
+     grid.cartesian.y_subsubdivs="5"
+     grid.cartesian.y_half_freq="4"
+     grid.cartesian.y_divs_th="2"
+     grid.cartesian.y_subdivs_th="1"
+     grid.cartesian.y_subsubdivs_th="0.30000001192092896"
+     grid.cartesian.border_th="3"
+     org.inkscape.effect.grid.lineWidth="1"
+     org.inkscape.effect.grid.xspacing="10"
+     org.inkscape.effect.grid.yspacing="10"
+     org.inkscape.effect.grid.xoffset="0"
+     org.inkscape.effect.grid.yoffset="0"
+     org.inkscape.effect.funcplot.xstart="0"
+     org.inkscape.effect.funcplot.xend="2"
+     org.inkscape.effect.funcplot.ybottom="0"
+     org.inkscape.effect.funcplot.ytop="1"
+     org.inkscape.effect.funcplot.samples="8"
+     org.inkscape.effect.funcplot.__live_effect__="0"
+     org.inkscape.effect.funcplot.tab="desc"
+     org.inkscape.effect.funcplot.fofx="x*x"
+     org.inkscape.effect.funcplot.remove="0" />
   <group
      id="desktop"
-     style="fill:#d45500;opacity:1;fill-opacity:1;stroke-width:0.59999999999999998;stroke-miterlimit:0.80000000999999998;stroke-dasharray:none;stroke:#081ca4;stroke-opacity:0.98263924999999996;stroke-linecap:round;stroke-linejoin:round">
+     style="fill:#22c756;opacity:0.71686108000000004;fill-opacity:1;stroke-width:0.28799998999999998;stroke-miterlimit:0.80000000999999998;stroke-dasharray:none;stroke:#2d4ea6;stroke-opacity:1;stroke-linecap:round;stroke-linejoin:round;fill-rule:nonzero;color:#000000;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate">
     <group
-       width="1078"
-       height="1884"
+       width="1074"
+       height="1290"
        x="1080"
-       y="34"
+       y="14"
        fullscreen="0"
        id="geometry"
        maximized="0" />
@@ -992,25 +1084,25 @@
   <group
      id="devices">
     <group
-       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
-       axes="x;y;pressure;xtilt;ytilt;wheel"
+       id="P:Wacom Bamboo 16FG 4x5 Pen stylus"
        mode="screen"
-       id="P:Wacom Bamboo 16FG 4x5 Pen stylus" />
-    <group
-       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
        axes="x;y;pressure;xtilt;ytilt;wheel"
-       mode="disabled"
-       id="P:Wacom Bamboo 16FG 4x5 Finger touch" />
+       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;" />
     <group
-       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
-       axes="x;y;pressure;xtilt;ytilt;wheel"
+       id="P:Wacom Bamboo 16FG 4x5 Finger touch"
        mode="disabled"
-       id="E:Wacom Bamboo 16FG 4x5 Pen eraser" />
+       axes="x;y;pressure;xtilt;ytilt;wheel"
+       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;" />
     <group
-       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
-       axes="x;y;pressure;xtilt;ytilt;wheel"
+       id="E:Wacom Bamboo 16FG 4x5 Pen eraser"
        mode="disabled"
-       id="P:Wacom Bamboo 16FG 4x5 Finger pad" />
+       axes="x;y;pressure;xtilt;ytilt;wheel"
+       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;" />
+    <group
+       id="P:Wacom Bamboo 16FG 4x5 Finger pad"
+       mode="disabled"
+       axes="x;y;pressure;xtilt;ytilt;wheel"
+       keys=";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;" />
   </group>
   <group
      id="toolbox"
@@ -1020,7 +1112,7 @@
     <group
        id="tools"
        icononly="1"
-       small="0" />
+       small="1" />
   </group>
   <group
      id="iconpreview"

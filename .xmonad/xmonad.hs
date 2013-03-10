@@ -20,7 +20,7 @@ import qualified XMonad.Layout.Groups      as G
 import XMonad.Util.NamedScratchpad
 import XMonad.Prompt
 import XMonad.Prompt.Shell
-import XMonad.Layout.Groups.Helpers
+import XMonad.Layout.Groups.Helpers as H
 
 -- | TODO | XMonad.Prompt may be of use to find window by string
 ----------------------------------------------------------------
@@ -100,16 +100,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
 
     -- Resize viewed windows to the correct size
-    , ((modm,               xK_n     ), refresh)
+--     , ((modm,               xK_n     ), refresh)
 
     -- Move focus to the next window
     , ((modm,               xK_Tab   ), focusDown) -- windows W.focusDown)
 
     -- Move focus to the next window
-    , ((modm .|. shiftMask,               xK_j     ), focusDown) -- windows W.focusDown)
+    , ((modm .|. shiftMask,               xK_j     ), H.focusDown) -- windows W.focusDown)
 
     -- Move focus to the previous window
-    , ((modm .|. shiftMask,               xK_k     ), focusUp) -- windows W.focusUp  )
+    , ((modm .|. shiftMask,               xK_k     ), H.focusUp) -- windows W.focusUp  )
 
     -- Move focus to the master window
     , ((modm,               xK_m     ), windows W.focusMaster  )
@@ -153,8 +153,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm    , xK_x),    shellPrompt defaultXPConfig) 
 
         
-    , ((modm    , xK_period),    increaseNMasterGroups) 
-    , ((modm    , xK_comma),    decreaseNMasterGroups) 
+    , ((modm    , xK_equal),    increaseNMasterGroups) 
+    , ((modm    , xK_minus),    decreaseNMasterGroups) 
     , ((modm    , xK_l),    expandMasterGroups) 
     , ((modm    , xK_h),    shrinkMasterGroups) 
     , ((modm    , xK_space),    nextOuterLayout) 
