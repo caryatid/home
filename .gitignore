@@ -1,12 +1,15 @@
 ///////////////////////-|-|  |-|-/
 // general ignores
-.*.swp
-.*.log
+*.swp
+*.log
+**/*.o
+**/*.so
+**/*.pyo
+**/*.hi
 .config/[cC]hromium
 .config/transmission
 .config/ranger/history
 .config/geany/*_0
-.vim
 // end: general ignores
 ///////////////////////-----------------------/
 

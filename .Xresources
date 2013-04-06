@@ -5,3 +5,7 @@ URxvt.keysym.M-u:           perl:url-select:select_next
 URxvt.keysym.M-Escape:      perl:keyboard-select:activate
 URxvt.keysym.M-s:           perl:keyboard-select:search
 URxvt.font:                 xft:Terminus:size=13
+
+
+! URxvt.foreground:              [100]#007536
+URxvt.color12:                  [100]#64AAD0

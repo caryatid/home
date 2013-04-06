@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveDataTypeable #-}
 --
 -- xmonad example config file.
 --
@@ -22,11 +23,7 @@ import XMonad.Prompt
 import XMonad.Prompt.Shell
 import XMonad.Layout.Groups.Helpers as H
 
--- | TODO | XMonad.Prompt may be of use to find window by string
-----------------------------------------------------------------
-
--- | TODO | Generally clean up imports and calls. Xmonad.Groups.Examples and ilk
---------------------------------------------------------------------------------
+import XMonad.Util.ExtensibleState as XS
 
 scratchpads = [
     NS "htop" (myTerminal ++ " -e htop -T htop") (title =? "htop") 
@@ -39,6 +36,45 @@ scratchpads = [
         (customFloating $ W.RationalRect (1/2) (1/2) (1/2) (1/2) )
 
     ] where role = stringProperty "WM_WINDOW_ROLE"
+
+-- +|......................................// color terms //---|{{{
+--  |TODO|  color terms
+
+
+-- terminal colors
+data TColor = TRed | TGreen | TBlue
+            deriving (Enum, Bounded, Eq)
+
+-- state holding current terminal color
+data TColorState = TColorState TColor
+                 deriving Typeable
+
+instance ExtensionClass TColorState
+        where
+            initialValue = TColorState TRed
+
+-- convert a color to a shell-escaped X11 color spec
+tColor :: TColor -> (String, String)
+tColor TRed   = ("\\#A8CCEA", "\\#012645")
+tColor TGreen = ("\\#5BECB5", "\\#00482D")
+tColor TBlue  = ("\\#FFDEB1", "\\#95713E")
+
+-- get the current terminal color and save the next one to use
+tRotate :: X (String, String)
+tRotate = do
+        (TColorState c) <- XS.get
+        XS.put . TColorState $ if c == maxBound then minBound else succ c
+        return $ tColor c
+
+-- spawn a terminal with a rotating background color
+colorTerminal :: X ()
+colorTerminal = do
+        (l,d) <- tRotate -- light, dark
+        term <- asks $ terminal . config
+        spawn $ term ++ " -fg " ++ d ++ " -bg " ++ l
+
+
+--  +|.............// 2a72af7f-fbaa-4c14-a8ed-ca7ef4d7e918 //---|}}}
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -74,7 +110,7 @@ myWorkspaces    = ["code","doc","journal","comm","media","beethoven","dvorak","w
 -- Border colors for unfocused and focused windows, respectively.
 --
 myNormalBorderColor  = "#222222"
-myFocusedBorderColor = "#ccccee"
+myFocusedBorderColor = "#FFBF62"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -82,7 +118,8 @@ myFocusedBorderColor = "#ccccee"
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
-    [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+    [ ((modm .|. shiftMask, xK_Return), colorTerminal)
+    --  [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
     , ((modm,               xK_p     ), spawn "dmenu_run")
