@@ -55,9 +55,9 @@ instance ExtensionClass TColorState
 
 -- convert a color to a shell-escaped X11 color spec
 tColor :: TColor -> (String, String)
-tColor TRed   = ("\\#A8CCEA", "\\#012645")
+tColor TBlue   = ("\\#A8CCEA", "\\#012645")
 tColor TGreen = ("\\#5BECB5", "\\#00482D")
-tColor TBlue  = ("\\#FFDEB1", "\\#95713E")
+tColor TRed  = ("\\#FFDEB1", "\\#95593E")
 
 -- get the current terminal color and save the next one to use
 tRotate :: X (String, String)
