@@ -25,6 +25,11 @@ import XMonad.Layout.Groups.Helpers as H
 
 import XMonad.Util.ExtensibleState as XS
 
+import Data.List
+import Data.Colour as DC
+import Data.Colour.Names
+import Data.Colour.SRGB
+
 scratchpads = [
     NS "htop" (myTerminal ++ " -e htop -T htop") (title =? "htop") 
         (customFloating $ W.RationalRect (0) (0) (1/2) (1/2) ),
@@ -73,6 +78,31 @@ colorTerminal = do
         term <- asks $ terminal . config
         spawn $ term ++ " -fg " ++ d ++ " -bg " ++ l
 
+data ColorSet a b = ColorSet [(a,b)]
+              deriving (Show)
+-- colors for urxvt
+rxvtArgs :: [String]
+rxvtArgs = zipWith (++) pre post
+    where pre = repeat "--"
+          post = [ "cursorColor"
+                 , "foreground"
+                 , "background"] ++ 
+                 (take 16 $ ["color" ++ (show x) | x <- [0..]])
+rxvtColors :: [String] -> [String]            
+rxvtColors = zipWith (++) (repeat "\\#")
+
+--  lessColor :: (Fractional a, Ord a, ColourOps f) => a -> f a -> [f a]
+lessColor n x  
+        | n < 0 = []
+        | otherwise = ("\\" ++ (sRGB24show $ darken n x)) : lessColor (n - 0.23) x
+
+genColorSet = let x = zip rxvtArgs $ lessColor 1 grey
+                  in map (\(a,b) -> a ++ " " ++ b) x
+
+test2 :: X ()
+test2 = do
+        term <- asks $ terminal . config
+        spawn $  term ++ " " ++  intercalate " "  genColorSet 
 
 --  +|.............// 2a72af7f-fbaa-4c14-a8ed-ca7ef4d7e918 //---|}}}
 
@@ -120,10 +150,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), colorTerminal)
     --  [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
-
+    
     -- launch dmenu
     , ((modm,               xK_p     ), spawn "dmenu_run")
 
+    , ((modm,               xK_y     ), test2)
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
 
