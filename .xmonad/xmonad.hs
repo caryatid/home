@@ -24,6 +24,7 @@ import XMonad.Prompt.Shell
 import XMonad.Layout.Groups.Helpers as H
 
 import XMonad.Util.ExtensibleState as XS
+import Control.Applicative
 
 import Data.List
 import Data.Colour as DC
@@ -31,14 +32,14 @@ import Data.Colour.Names
 import Data.Colour.SRGB
 
 scratchpads = [
-    NS "htop" (myTerminal ++ " -e htop -T htop") (title =? "htop") 
-        (customFloating $ W.RationalRect (0) (0) (1/2) (1/2) ),
-    NS "term" (myTerminal ++ " --role scratch") (role =? "scratch") 
-        (customFloating $ W.RationalRect (0) (1/2) 1 (1/2) ),
-    NS "notes" ("gvim -i NONE " ++ "-c \"set viminfo=\" " ++ "--role notes ~/bucket_list.txt") (role =? "notes") 
-        (customFloating $ W.RationalRect (0) (0) 1 (1/2) ),
-    NS "mpc"   (myTerminal ++ " -e ncmpc -T ncmpc") (title =? "ncmpc") 
-        (customFloating $ W.RationalRect (1/2) (1/2) (1/2) (1/2) )
+    NS "htop" (myTerminal                                      ++ " -e htop -T htop") (title =? "htop")
+    (customFloating $ W.RationalRect (0) (0) (1/2) (1/2) ),
+    NS "term" (myTerminal                                      ++ " --role scratch") (role =? "scratch")
+    (customFloating $ W.RationalRect (0) (1/2) 1 (1/2) ),
+    NS "notes" ("gvim -i NONE "                                ++ "-c \"set viminfo=\" "                   ++ "--role notes ~/bucket_list.txt") (role =? "notes")
+    (customFloating $ W.RationalRect (0) (0) 1 (1/2) ),
+    NS "mpc"   (myTerminal                                     ++ " -e ncmpc -T ncmpc") (title =? "ncmpc")
+    (customFloating $ W.RationalRect (1/2) (1/2) (1/2) (1/2) )
 
     ] where role = stringProperty "WM_WINDOW_ROLE"
 
@@ -60,9 +61,9 @@ instance ExtensionClass TColorState
 
 -- convert a color to a shell-escaped X11 color spec
 tColor :: TColor -> (String, String)
-tColor TBlue   = ("\\#A8CCEA", "\\#012645")
+tColor TBlue  = ("\\#A8CCEA", "\\#012645")
 tColor TGreen = ("\\#5BECB5", "\\#00482D")
-tColor TRed  = ("\\#FFDEB1", "\\#95593E")
+tColor TRed   = ("\\#FFDEB1", "\\#95593E")
 
 -- get the current terminal color and save the next one to use
 tRotate :: X (String, String)
@@ -92,17 +93,37 @@ rxvtColors :: [String] -> [String]
 rxvtColors = zipWith (++) (repeat "\\#")
 
 --  lessColor :: (Fractional a, Ord a, ColourOps f) => a -> f a -> [f a]
-lessColor n x  
-        | n < 0 = []
-        | otherwise = ("\\" ++ (sRGB24show $ darken n x)) : lessColor (n - 0.23) x
 
-genColorSet = let x = zip rxvtArgs $ lessColor 1 grey
+
+prnSpread = map (\c -> ("\\" ++ sRGB24show c))
+
+spread c = map (flip darken c) $ rng where
+    rng = map (0.2-) $ map (*0.13) [0..2]
+
+
+
+darker16 :: (Enum a, Fractional a, ColourOps f) => f a -> [f a]
+darker16 c = map (flip darken c) $ map (\x -> x / 16) [1..16] 
+test16 :: (Enum a, Fractional a, ColourOps f) => f a -> [f a]
+test16 = reverse . darker16
+
+moreDark cs = do
+        col <- cs
+        return $ darker16 cs
+            
+
+mkList [] _ = []
+mkList _ [] = []
+mkList (x:xs) (y:ys) = x:y:(mkList xs ys)
+genColorSet = let y = mkList (prnSpread $ darker16 grey) (prnSpread $ test16 grey)
+                  x = zip rxvtArgs $ cycle y 
                   in map (\(a,b) -> a ++ " " ++ b) x
 
 test2 :: X ()
 test2 = do
         term <- asks $ terminal . config
-        spawn $  term ++ " " ++  intercalate " "  genColorSet 
+        --  let args = " -e \'echo " ++ (intercalate " " rxvtArgs) ++ "; bash\'"
+        spawn $  term ++ " " ++  (intercalate " " genColorSet) 
 
 --  +|.............// 2a72af7f-fbaa-4c14-a8ed-ca7ef4d7e918 //---|}}}
 
@@ -174,10 +195,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_Tab   ), focusDown) -- windows W.focusDown)
 
     -- Move focus to the next window
-    , ((modm .|. shiftMask,               xK_j     ), H.focusDown) -- windows W.focusDown)
+    , ((modm .|. shiftMask,               xK_h     ), H.focusDown) -- windows W.focusDown)
 
     -- Move focus to the previous window
-    , ((modm .|. shiftMask,               xK_k     ), H.focusUp) -- windows W.focusUp  )
+    , ((modm .|. shiftMask,               xK_l     ), H.focusUp) -- windows W.focusUp  )
 
     -- Move focus to the master window
     , ((modm,               xK_m     ), windows W.focusMaster  )
@@ -192,10 +213,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
  ----   , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
 
     -- Shrink the master area
-    , ((modm,               xK_h     ), sendMessage Shrink)
+    {- , ((modm,               xK_h     ), sendMessage Shrink) -}
 
     -- Expand the master area
-    , ((modm,               xK_l     ), sendMessage Expand)
+    {- , ((modm,               xK_l     ), sendMessage Expand) -}
 
     -- Push window back into tiling
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)

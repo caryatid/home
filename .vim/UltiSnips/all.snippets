@@ -178,6 +178,20 @@ else:
 endsnippet
 
 
+snippet todo "easily enter todo system records" !
+`!p
+snip.rv = message_bar(50, t[1])`{{{
+ |TODO|  ${1:description}
+${0}
+`!p
+import datetime
+import getpass
+if not snip.c:
+    now = datetime.datetime.now()
+    snip.rv= message_bar(50, uuid_gen())
+else:
+    snip.rv=snip.c`}}}
+endsnippet
 #####--------------------------------------}}}
 ## end: TODO
 ##############################################

@@ -11,6 +11,7 @@ set visualbell
 set encoding=utf-8
 set hidden
 set viminfo='1000,f1,<500,:100,@100,/100
+set noswapfile
 
 """""------------------||------------------}}}
 "" end: general setup
