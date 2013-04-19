@@ -1,4 +1,5 @@
-+|.....................................// timebox spec //---|{{{ |TODO|  timebox spec
++|.....................................// timebox spec //---|{{{ 
+ |TODO|  timebox spec
  | Fulfills notes and scheduling
  -------------------------------
     aim is to simplify. notes are often too verbose. 
