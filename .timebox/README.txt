@@ -129,14 +129,27 @@
     prepense are added to a task list,  one of:
         any bucket
         one of category:
-            whenever
+            opportune
             work area lists
             requisites
+                these can can be created with a reference to other 
+                lists, like primary
     habits:
         morning task list eval and daily todo creation
         default -> flow protocol
         mid day lunch and exercise
         evening journal
+
+    directory structure
+        / primary :: link to actual work area
+        / archive :: dir
+            primary_<date> :: old links
+            secondary_<date> :: old links
+        / secondary :: link to the actual work area
+        / requisite
+            req.txt :: list of tasks that other actions await
+        / opportune
+            opp.txt :: list of tasks that can happen whenever
 
 +|........// d6296127-32f3-4ca0-85e1-6ea2ced50499 //---|}}}
 
