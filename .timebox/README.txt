@@ -1,5 +1,4 @@
-+|.....................................// timebox spec //---|{{{
- |TODO|  timebox spec
++|.....................................// timebox spec //---|{{{ |TODO|  timebox spec
  | Fulfills notes and scheduling
  -------------------------------
     aim is to simplify. notes are often too verbose. 
@@ -22,7 +21,6 @@
     it is the goal of not drinking which requires specific actions
     more than it requires a non-action. Because it is more about
     changing your mind than your behavior.
-
 
     Another goal of simplification is to require the least amount
     of forced habits. For example, trying to stick to a very
