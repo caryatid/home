@@ -121,9 +121,6 @@ let g:NERDCustomDelimiters={
     \    '##-##', 'right': '' }
     \}
 
-"""""""""
-"" nerd tree
-nnoremap <silent> <F8> :NERDTreeToggle<cr>
 
 """""""""
 "" haskell mode
