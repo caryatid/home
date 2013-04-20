@@ -1,4 +1,12 @@
-+|.................................// set up opportune //---|{{{
- |TODO|  set up opportune
++|..................................// game randomness //---|{{{
+ |TODO|  game randomness
+ | Contemplate tolerable uncertainty in games
+ 
 
-+|.............// f9624d4a-c08c-4406-adfc-dd627534b153 //---|}}}
+
++|.............// 0cd1e9e8-2a0a-4061-b611-600347260a48 //---|}}}
+
++|.............................// vim maps for timebox //---|{{{
+ |TODO|  vim maps for timebox
+
++|.............// fcc9939b-cf14-480b-b8e7-1d3d054ab12d //---|}}}
