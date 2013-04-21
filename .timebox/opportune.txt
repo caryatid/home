@@ -9,10 +9,3 @@
 
 +|.............// fcc9939b-cf14-480b-b8e7-1d3d054ab12d //---|}}}
 
-+|............................// check out vim scripts //---|{{{
- |TODO|  check out vim scripts
-    Tim pope in general
-    and:
-    http://www.vim.org/scripts/script.php?script_id=2975
-
-+|.............// f282efeb-c0f6-4832-b27a-924df639e217 //---|}}}

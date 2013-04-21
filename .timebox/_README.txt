@@ -1,4 +1,4 @@
-+|.....................................// timebox spec //---|{{{ 
++|.....................................// timebox spec //---|{{{
  |TODO|  timebox spec
  | Fulfills notes and scheduling
  -------------------------------
@@ -124,31 +124,45 @@
  ---------------
     eschews scheduling
     incindental may only be placed on the daily todo
-
+    
     prepense are added to a task list,  one of:
         any bucket
         one of category:
             opportune
-            work area lists
+            goal area lists
             requisites
                 these can can be created with a reference to other 
                 lists, like primary
+
+    goal lists:
+        are greps from the directory where the goal resides.
+        some expected things could be:
+            - bucket_list.txt
+            - .timebox dir that holds extra info or 
+                special lists
+             
     habits:
         morning task list eval and daily todo creation
         default -> flow protocol
         mid day lunch and exercise
         evening journal
 
-    directory structure
+    directory structure of timebox dir
         / primary :: link to actual work area
         / archive :: dir
             primary_<date> :: old links
             secondary_<date> :: old links
+            [ *.tgz for each one too, maybe ]
         / secondary :: link to the actual work area
         / requisite
             req.txt :: list of tasks that other actions await
         / opportune
             opp.txt :: list of tasks that can happen whenever
+    example goals
+        gurgeh [ Jernau Morat ] :: primary
+        bike tour :: secondary
+        album     :: tertiary
+        base      :: not active
 
 +|........// d6296127-32f3-4ca0-85e1-6ea2ced50499 //---|}}}
 

@@ -1,0 +1,15 @@
++|............................// check out vim scripts //---|{{{
+ |TODO|  check out vim scripts
+    Tim pope in general
+    and:
+    http://www.vim.org/scripts/script.php?script_id=2975
+
++|.............// f282efeb-c0f6-4832-b27a-924df639e217 //---|}}}
+
++|................// xmonad cycle tabs in visual order //---|{{{
+ |TODO|  xmonad cycle 
+    tabs in visual order
+
++|.............// 2b80f72c-2b3c-471e-b3d2-d44ed04f7f15 //---|}}}
+
+
