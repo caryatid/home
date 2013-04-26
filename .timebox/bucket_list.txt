@@ -1,15 +1,9 @@
-+|............................// check out vim scripts //---|{{{
- |TODO|  check out vim scripts
-    Tim pope in general
-    and:
-    http://www.vim.org/scripts/script.php?script_id=2975
++|..................// copy over habits to a real file //---|{{{
+ |TODO|  copy over habits to a real file
 
-+|.............// f282efeb-c0f6-4832-b27a-924df639e217 //---|}}}
++|.............// a5c0264e-a614-4897-8c5b-8947920c38ed //---|}}}
 
-+|................// xmonad cycle tabs in visual order //---|{{{
- |TODO|  xmonad cycle 
-    tabs in visual order
-
-+|.............// 2b80f72c-2b3c-471e-b3d2-d44ed04f7f15 //---|}}}
-
-
++|..............................// Leszek F. Demkowicz //---|{{{
+ |TODO|  Leszek F. Demkowicz
+http://users.ices.utexas.edu/~leszek/
++|.............// 4f8c104f-5a54-44ea-b605-105f3a2a3f74 //---|}}}

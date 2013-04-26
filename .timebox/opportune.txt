@@ -9,3 +9,8 @@
 
 +|.............// fcc9939b-cf14-480b-b8e7-1d3d054ab12d //---|}}}
 
++|................// xmonad cycle tabs in visual order //---|{{{
+ |TODO|  xmonad cycle 
+    tabs in visual order
+
++|.............// 2b80f72c-2b3c-471e-b3d2-d44ed04f7f15 //---|}}}
