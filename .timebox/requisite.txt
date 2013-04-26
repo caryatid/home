@@ -1,7 +1,3 @@
-+|............................// set up requisite page //---|{{{
- |TODO|  set up requisite page
-
-+|.............// 1770ae48-eeb6-480c-98ed-a5910a960db5 //---|}}}
 
 +|............................// get a bedside Journal //---|{{{
  |TODO|  get a bedside Journal
@@ -13,3 +9,15 @@
 
 +|.............// b22636d7-b669-4ba9-a5f5-7c8d4d53ea5f //---|}}}
 
++|............................// check out vim scripts //---|{{{
+ |TODO|  check out vim scripts
+    Tim pope in general
+    and:
+    http://www.vim.org/scripts/script.php?script_id=2975
+
++|.............// f282efeb-c0f6-4832-b27a-924df639e217 //---|}}}
+
++|................// take down rodent revolution notes //---|{{{
+ |TODO|  take down rodent revolution notes
+
++|.............// 7c825a6c-f011-46fe-b51c-e0c6d027d145 //---|}}}

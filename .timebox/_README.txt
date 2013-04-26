@@ -166,4 +166,32 @@
 
 +|........// d6296127-32f3-4ca0-85e1-6ea2ced50499 //---|}}}
 
++|......................................// habits //---|{{{
+ |TODO|  habits
+ | Morning
+ ---------
+    - trigger -> morning hot drink 
+    - success_p -> Todo List
+    
+ | Todo List
+ -----------
+    - trigger -> morning plan
+    - success_p -> compiled lists
+
+ | Self Question
+ ---------------
+    - trigger -> any moment without focus
+    - success_p -> default flow yields `ok`
+
+ | Lunch
+ -------
+    - trigger -> noon
+    - success_p -> exercised and fed
+
+ | Journal
+ ---------
+    - trigger -> bed
+    - success_p -> wrote in it
+
++|........// c7e3ff80-43de-4cca-ba5b-bca66fa82675 //---|}}}
 +|.............// 07dc25e1-ac55-4b87-874b-1c76b7219fc3 //---|}}}
