@@ -1,3 +1,28 @@
++|.........................// folder for info //---|{{{
+ check out baxter's music
+ ------------------------
+    Go through and make a storage place for info on it
+
+ general interest web pages
+ --------------------------
+    find smarty mcSmarter pants shit like prospect and Edge
+    also arts like artangel
+
+ People and places
+ -----------------
+ Leszek F. Demkowicz
+    http://users.ices.utexas.edu/~leszek/
+ Alasdair Gray
+    http://en.wikipedia.org/wiki/Alasdair_Gray
+ Nassim Nicholas Taleb
+    http://en.wikipedia.org/wiki/Nassim_Nicholas_Taleb
+
+    The plan here:
+        set up reasonable folder storage layout 
+        also a git repo
+
++|.............// 1a1ceefc-4d3c-4d03-b089-f8ba16cc59d8 //---|}}}
+
 +|..................................// game randomness //---|{{{
  |TODO|  game randomness
  | Contemplate tolerable uncertainty in games

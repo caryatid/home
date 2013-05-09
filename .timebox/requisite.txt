@@ -1,14 +1,4 @@
 
-+|............................// get a bedside Journal //---|{{{
- |TODO|  get a bedside Journal
-
-+|.............// d1c4f166-1018-4497-bb71-2ecb5785e06a //---|}}}
-
-+|...................// take down dead sea scroll info //---|{{{
- |TODO|  take down dead sea scroll info
-
-+|.............// b22636d7-b669-4ba9-a5f5-7c8d4d53ea5f //---|}}}
-
 +|............................// check out vim scripts //---|{{{
  |TODO|  check out vim scripts
     Tim pope in general
