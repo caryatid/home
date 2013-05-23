@@ -75,7 +75,7 @@
         - plan route :: prepense
           - book lodging if needed :: incindental
           - determine daily ride ability :: prepense
-            - plan practice rides :: prepense
+            - plan practice rides :: incindental
         - provisions :: prepense
 
     | attributes

@@ -1,4 +1,4 @@
-+|.........................// folder for info //---|{{{
++|.................................// folder for info //---|{{{
  check out baxter's music
  ------------------------
     Go through and make a storage place for info on it
@@ -39,3 +39,14 @@
     tabs in visual order
 
 +|.............// 2b80f72c-2b3c-471e-b3d2-d44ed04f7f15 //---|}}}
+
++|............................// make hummingbird nice //---|{{{
+ |TODO|  make hummingbird nice
+
++|.............// 6406b246-0d40-498e-8eba-a0c7a94aebc2 //---|}}}
+
++|..........................// break down windows desk //---|{{{
+ |TODO|  break down windows desk
+ Make sure machine is easily reachable else where
+ set up that desk area for book based study
++|.............// afe795b9-06ef-4388-aad5-5b517da2e51d //---|}}}

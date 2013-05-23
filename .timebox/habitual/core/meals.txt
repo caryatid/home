@@ -1,0 +1,5 @@
+  | id | name                       | description                                       | location | 
+  | 1  | brisket sandwich           | sammy and sides                                   | 21st BBQ | 
+  | 2  | chicken and wild rice soup | Pacific Natural Foods                             | home     | 
+  | 3  | BLT                        | Ken's bread, chop bacon, Empire truffle mayonaise | home     | 
+  | 4  | parisian                   | Prosciutto style                                  | Sterling | 

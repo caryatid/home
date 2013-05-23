@@ -1,4 +1,3 @@
-
 +|............................// check out vim scripts //---|{{{
  |TODO|  check out vim scripts
     Tim pope in general
@@ -11,3 +10,9 @@
  |TODO|  take down rodent revolution notes
 
 +|.............// 7c825a6c-f011-46fe-b51c-e0c6d027d145 //---|}}}
+
++|..........................// break down windows desk //---|{{{
+ |TODO|  break down windows desk
+ Make sure machine is easily reachable else where
+ set up that desk area for book based study
++|.............// afe795b9-06ef-4388-aad5-5b517da2e51d //---|}}}

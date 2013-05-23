@@ -1,7 +1,13 @@
-+|........................// one git to rule them all  //---|{{{
- |TODO|  one git to rule them all 
-    a way to sync up the various machines from different places
-+|.............// f12c7a23-03a3-4b4d-868c-9c4f901aaee2 //---|}}}
++|..................................// Marie de France //---|{{{
+ |TODO|  Marie de France
 
++|.............// 3391971d-d28f-4f15-9c8c-3715935c4dff //---|}}}
++|....................................// table for vim //---|{{{
+ |TODO|  table for vim
 
-Marie de France : http://en.wikipedia.org/wiki/Marie_de_France
++|.............// 53711e2d-0afb-453c-88a9-3a6f64d0e263 //---|}}}
+
++|......................// visual mode global snippets //---|{{{
+ |TODO|  visual mode global snippets
+
++|.............// 1ca99e99-4218-4b73-be3b-1416b715dbc1 //---|}}}
