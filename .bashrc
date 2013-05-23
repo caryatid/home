@@ -9,5 +9,5 @@ alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 export LANG=en_US.UTF-8
 export PATH=/home/dave/.cabal/bin:${PATH}
-export EDITOR=gvim
+export EDITOR=vim
 export TERMCMD=urxvtc

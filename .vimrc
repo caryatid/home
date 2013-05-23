@@ -12,6 +12,7 @@ set encoding=utf-8
 set hidden
 set viminfo='1000,f1,<500,:100,@100,/100
 set noswapfile
+set autowrite
 
 """""------------------||------------------}}}
 "" end: general setup
@@ -28,7 +29,7 @@ set background=light
 " colorscheme rainbow_fruit
 " colorscheme soso
 " colorscheme rainbow_fine_blue
-colorscheme rainbow_neon
+colorscheme devbox-dark-256
 " colorscheme wombat
 " colorscheme beachcomber
 set nocursorline
@@ -85,7 +86,15 @@ set ruler
 set laststatus=2
 set relativenumber
 let g:showmarks_enable=1
-
+fun! RangerChooser()
+    exec "silent !ranger --choosefile=/tmp/chosenfile " . expand("%:p:h")
+    if filereadable('/tmp/chosenfile')
+        exec 'edit ' . system('cat /tmp/chosenfile')
+        call system('rm /tmp/chosenfile')
+    endif
+    redraw!
+endfun
+map <leader>r :call RangerChooser()<CR>
 """""------------------||------------------}}}
 "" end: UI
 """"""""""""""""""""""""""""""""""""""""""""""

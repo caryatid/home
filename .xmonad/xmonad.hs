@@ -155,8 +155,15 @@ myModMask       = mod4Mask
 -- A tagging example:
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
---
-myWorkspaces    = ["code","doc","journal","comm","media","beethoven","dvorak","work","9"]
+--                         
+myWorkspaces    = ["goal"
+                  ,"documentation"
+                  ,"timebox"
+                  ,"journal"
+                  ,"autobun"
+                  ,"media"
+                  ,"system"
+                  ]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
