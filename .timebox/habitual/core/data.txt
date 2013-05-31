@@ -1,3 +1,3 @@
- | date       | meals | exercise | meditation | goals | 
- | 2013-05-21 | 0,1,2 | 0        | 0          | 0     | 
- | 2013-05-22 | 4,3,  |          |            |       | 
+   | date       | meals | exercise | meditation | goals  | 
+   | 2013-05-21 | 0,1,2 | 0        | 0          | 0      | 
+   | 2013-05-22 | 4,3,5 | 0        | 0          | 1,0:34 | 

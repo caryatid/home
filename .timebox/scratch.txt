@@ -1,5 +1,6 @@
 Things:
 
-   vim opener for timebox
    git script for updating all my shiznit
+   common location for external data
+
 

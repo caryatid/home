@@ -5,7 +5,7 @@ cc = vim.eval("&commentstring")[0]
 def header_bar(txt=""):
     retval = "+-" + ("-" * len(txt))
     return retval
-    
+
 def box(txt,hor='-', ver='|', cor='+'):
     retval=[]
     # find min leading string len
@@ -31,13 +31,16 @@ def uuid_gen():
 
 def message_bar(ln, msg=""):
     # looks like
-    # +|------------// Title brau //----|{{{
-    if len(msg) > (ln - 8):
-        retval = 'start over, buddy'
+    #| OLD | +|------------// Title brau //----|{{{
+    # --| ------------. Title brau .----
+    retval = []
+    txt = msg.splitlines()
+    if len(txt[0]) > (ln - 8):
+        retval = ['start over, buddy']
     else:
-        retval = '+{mark}{message:{fill}>{width}}---|'.format(mark='|', message="// " + msg + " //", fill='.', width=ln)
+        retval = ['{mark}{message:{fill}>{width}}---|'.format(mark="--", message=". " + txt[0] + " .", fill='-', width=ln)]
+        retval.extend(["-- " + x for x in txt])
     return retval
-
 endglobal
 
 

@@ -5,12 +5,10 @@
     http://www.vim.org/scripts/script.php?script_id=2975
 
 +|.............// f282efeb-c0f6-4832-b27a-924df639e217 //---|}}}
-
 +|................// take down rodent revolution notes //---|{{{
  |TODO|  take down rodent revolution notes
 
 +|.............// 7c825a6c-f011-46fe-b51c-e0c6d027d145 //---|}}}
-
 +|..........................// break down windows desk //---|{{{
  |TODO|  break down windows desk
  Make sure machine is easily reachable else where
