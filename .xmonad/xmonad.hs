@@ -41,6 +41,7 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.FadeInactive
 import XMonad.Layout.BoringWindows
 import XMonad.Layout.Drawer
 import XMonad.Layout.Grid
@@ -90,11 +91,13 @@ sofficeToolbox = className =? "OpenOffice.org 3.1"
 myConfig hs = let c = defaultConfig {
       layoutHook = myLayout
     , focusFollowsMouse = False
-    , focusedBorderColor = "red"
+    , focusedBorderColor = "#ddaadd"
+    , normalBorderColor = "#552255"
+    , borderWidth = 3
     , startupHook = do
         return () -- supposedly to avoid inf. loops with checkKeymap
         checkKeymap (myConfig []) (myKeys c)
-    , terminal = "urxvt"
+    , terminal = "urxvtc -fg \\#ddaadd -bg \\#000011"
     , modMask = mod4Mask
     , logHook = do
         multiPP'
@@ -104,6 +107,7 @@ myConfig hs = let c = defaultConfig {
             myPP{ ppTitle = const "" }
             hs
         updatePointer (TowardsCentre 0.2 0.2)
+        fadeInactiveLogHook 0.69
     , handleEventHook = ewmhDesktopsEventHook <+> fullscreenEventHook <+> focusFollow <+>
                     (\e -> case e of
                         PropertyEvent{ ev_window = w } -> do
@@ -219,9 +223,13 @@ myKeys c =
     ,("M-o", withFocused (sendMessage . wideWindowAlt) >> sendMessage Wider )
  
     ,("M-v", toggleFF)
- 
-    ,("M-S-b", restart "/home/aavogt/bin/obtoxmd" True)
-    ,("M-S-d", restart "urxvt -e xmonad" False)
+-- ------------------------------------[ unsure ]---{{{
+
+--  ,("M-S-b", restart "/home/aavogt/bin/obtoxmd" True)
+--  ,("M-S-d", restart "urxvt -e xmonad" False)
+-- |--------------- |
+-- |  TODO | unsure |
+-- ------[ d3bbda18-d03b-47dd-b306-cb874805e14f ]---}}} 
  
     ,("M-S-o"  , withFocused $ sendMessage . UnMerge   )
     ,("M-S-C-o", withFocused $ sendMessage . UnMergeAll)
@@ -376,6 +384,8 @@ myTopics =
   , "timebox"
   , "journal"
   , "media"
+  , "work"
+  , "system"
   ]
 home = "/home/dave" 
  

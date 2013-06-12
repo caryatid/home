@@ -24,12 +24,24 @@ set autowrite
 
 set hlsearch
 set background=light
+"-- ------------------------------------[ colors ]---{{{
+" colorscheme 256-jungle
+" colorscheme beauty256
+" colorscheme blacklight
+" colorscheme busierbee
+colorscheme candyman
+" colorscheme donbass
+
+"-- |--------------- |
+"-- |  TODO | colors |
+"-- ------[ a7628695-dfdc-49cd-8f1d-a29069765937 ]---}}}
+
 " colorscheme cthulhian
 " colorscheme oceandeep
 " colorscheme rainbow_fruit
 " colorscheme soso
 " colorscheme rainbow_fine_blue
-colorscheme devbox-dark-256
+" colorscheme devbox-dark-256
 " colorscheme wombat
 " colorscheme beachcomber
 set nocursorline
@@ -46,6 +58,13 @@ if has("gui_running")
 endif
 nnoremap <leader><space> :noh<cr>
 set foldmethod=marker
+set foldtext=myFoldText()
+function! MyFoldText()
+    let line = getline(v:foldstart)
+    let foo = line 
+    "substitute(line, '\{', '', 'g')
+    return foo
+endfunction
 
 """""--------------------------------------}}}
 "" end: visual

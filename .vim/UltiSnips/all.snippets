@@ -28,69 +28,59 @@ def uuid_gen():
     import uuid
     u = str(uuid.uuid4())
     return u
-
 def message_bar(ln, msg=""):
-    # looks like
-    #| OLD | +|------------// Title brau //----|{{{
-    # --| ------------. Title brau .----
     retval = []
-    txt = msg.splitlines()
-    if len(txt[0]) > (ln - 8):
+    if len(msg) > (ln - 8):
         retval = ['start over, buddy']
     else:
-        retval = ['{mark}{message:{fill}>{width}}---|'.format(mark="--", message=". " + txt[0] + " .", fill='-', width=ln)]
-        retval.extend(["-- " + x for x in txt])
+        retval = '{mark}{message:{fill}>{width}}---'.format(mark="-- ", message="[ " + msg + " ]", fill='-', width=ln)
     return retval
 endglobal
-
-
 snippet TODO "easily enter todo system records" !
 `!p
-snip.rv = message_bar(55, t[1])`{{{
- |TODO|  ${1:description}
+snip.rv = message_bar(53, t[1])`{{{
 ${0}
+-- |---------${1/./-/g} |
+-- |  TODO | ${1} |
 `!p
 import datetime
 import getpass
 if not snip.c:
     now = datetime.datetime.now()
-    snip.rv= message_bar(55, uuid_gen())
+    snip.rv= message_bar(53, uuid_gen())
 else:
     snip.rv=snip.c`}}}
 endsnippet
-
-
 snippet todo "easily enter todo system records" !
 `!p
-snip.rv = message_bar(50, t[1])`{{{
- |TODO|  ${1:description}
+snip.rv = message_bar(46, t[1])`{{{
 ${0}
+-- |---------${1/./-/g} |
+-- |  TODO | ${1} |
 `!p
 import datetime
 import getpass
 if not snip.c:
     now = datetime.datetime.now()
-    snip.rv= message_bar(50, uuid_gen())
+    snip.rv= message_bar(46, uuid_gen())
 else:
     snip.rv=snip.c`}}}
 endsnippet
-
-
 snippet _todo "easily enter todo no uuid" !
 `!p
 snip.rv = message_bar(39, t[1])`{{{
- |TODO|  ${1:description}
 ${0}
+-- |---------${1/./-/g} |
+-- |  TODO | ${1} |
 `!p
 import datetime
 import getpass
 if not snip.c:
     now = datetime.datetime.now()
-    snip.rv= message_bar(39, "" )
+    snip.rv= message_bar(39, "." )
 else:
     snip.rv=snip.c`}}}
 endsnippet
-
 
 snippet vbox "wrap current visual selection in box" !
 `!p

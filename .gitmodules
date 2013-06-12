@@ -43,3 +43,9 @@
 [submodule ".vim.vim/bundle/vim2hs"]
 	path = .vim.vim/bundle/vim2hs
 	url = git://github.com/dag/vim2hs.git
+[submodule ".vim/bundle/tabular"]
+	path = .vim/bundle/tabular
+	url = git://github.com/godlygeek/tabular.git
+[submodule ".vim/bundle/scroll_colors"]
+	path = .vim/bundle/scroll_colors
+	url = https://github.com/vim-scripts/ScrollColors.git
