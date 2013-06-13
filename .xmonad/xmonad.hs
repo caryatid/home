@@ -12,6 +12,7 @@
      #-}
 {-# OPTIONS_GHC -W -fwarn-unused-imports -fno-warn-missing-signatures #-}
  
+import XMonad.Layout.LayoutOne
 import Control.Applicative
 import Control.Monad
 import Control.Monad.Instances ()
@@ -171,7 +172,7 @@ myLayout =
         . avoidStruts
         . onWorkspace "a" ((Tall 1 0.03 0.5) ||| Full)
         . onWorkspace "primary" m
-        $ named "F" (noBorders Full) ||| s ||| Dishes 2 (1/6)
+        $ named "F" (noBorders Full) ||| s ||| Dishes 2 (1/6) ||| LayoutOne
         where m = named "Main" 
                 . addTabs shrinkText defaultTheme
                 . onLeft (simpleDrawer 0.01 0.3 $ ClassName "urxvt")
@@ -250,6 +251,7 @@ myKeys c =
     ,("M-<Tab>", switchNthLastFocused myTopicConfig . succ . length . W.visible . windowset =<< get )
  
     ,("M-s"  , warpToCentre >> promptedGoto )
+    ,("M-m"  , warpToCentre >> gridTest )
     ,("M-S-s", warpToCentre >> promptedShift)
  
     ,("M-b", sendMessage ToggleStruts)
@@ -420,6 +422,17 @@ wsgrid = gridselect gsConfig <=< asks $ map (\x -> (x,x)) . workspaces . config
 promptedGoto = wsgrid >>= flip whenJust (switchTopic myTopicConfig)
  
 promptedShift = wsgrid >>= \x -> whenJust x $ \y -> windows (W.greedyView y . W.shift y)
+
+-- -------------------------[ gridselect of gridselect ]---{{{
+nameAction = [("one", gridTest)
+             ,("two", gridTest')
+             ]
+gridTest = runSelectedAction gsConfig nameAction
+gridTest' = gets (current . windowset
+
+-- |--------------------------------- |
+-- |  TODO | gridselect of gridselect |
+-- -------------[ d9634bf8-2136-404c-9802-2a5bb616a9c6 ]---}}}
 --------------------------------------------------------------------------------
  
 --------------------------------------------------------------------------------
