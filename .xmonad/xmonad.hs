@@ -1,133 +1,111 @@
--- current darcs as of 2010-12-31
-{-# LANGUAGE
-     DeriveDataTypeable,
-     FlexibleContexts,
-     FlexibleInstances,
-     MultiParamTypeClasses,
-     NoMonomorphismRestriction,
-     PatternGuards,
-     ScopedTypeVariables,
-     TypeSynonymInstances,
-     UndecidableInstances
-     #-}
-{-# OPTIONS_GHC -W -fwarn-unused-imports -fno-warn-missing-signatures #-}
- 
-import XMonad.Layout.LayoutOne
+{-# LANGUAGE MultiParamTypeClasses,DeriveDataTypeable, FlexibleInstances #-}
+
+
 import Control.Applicative
+import XMonad.Actions.CycleWS
 import Control.Monad
-import Control.Monad.Instances ()
-import Control.Monad.Writer
+import Data.Colour as DC
+import Data.Colour.Names
+import Data.Colour.SRGB
 import Data.List
-import Data.Maybe
-import Data.Traversable(traverse)
-import Graphics.X11.Xinerama
-import qualified Data.Map as M
+import Data.Function
+import qualified Data.Map        as M
+import qualified XMonad.Layout.Groups as G
 import qualified XMonad.StackSet as W
-import qualified XMonad.Util.ExtensibleState as XS
-import System.IO
 import System.Exit
 import System.FilePath
 import XMonad
-import XMonad.Actions.DwmPromote
-import XMonad.Actions.FloatSnap
 import XMonad.Actions.GridSelect
-import XMonad.Actions.Search
-import XMonad.Actions.SpawnOn
-import XMonad.Actions.Submap
 import XMonad.Actions.TopicSpace
-import XMonad.Actions.UpdatePointer
-import XMonad.Actions.Warp
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.UrgencyHook
-import XMonad.Hooks.FadeInactive
-import XMonad.Layout.BoringWindows
-import XMonad.Layout.Drawer
-import XMonad.Layout.Grid
-import XMonad.Layout.IM
-import XMonad.Layout.LayoutHints
-import XMonad.Layout.LayoutModifier
-import XMonad.Layout.Magnifier
-import XMonad.Layout.Master
-import XMonad.Layout.Mosaic
-import XMonad.Layout.MosaicAlt
-import XMonad.Layout.MouseResizableTile
-import XMonad.Layout.Named
-import XMonad.Layout.NoBorders
-import XMonad.Layout.PerWorkspace
-import XMonad.Layout.Simplest
-import XMonad.Layout.SimplestFloat
-import XMonad.Layout.SubLayouts
-import XMonad.Layout.Tabbed
-import XMonad.Layout.TrackFloating
-import XMonad.Layout.WindowNavigation
-import XMonad.Layout.Cross
-import XMonad.Layout.Dishes
+import XMonad.Actions.SpawnOn
+import XMonad.Layout.Groups.Helpers
+import XMonad.Layout.LayoutOne
+import XMonad.Util.ExtensibleState as XS
 
-import XMonad.Prompt
-import XMonad.Prompt.RunOrRaise
-import XMonad.Prompt.Ssh
-import XMonad.Prompt.Window
-import XMonad.Prompt.XMonad
-import XMonad.Util.EZConfig
-import XMonad.Util.Replace
-import XMonad.Util.Run
- 
- 
-main :: IO ()
-main = do
-    replace
-    checkTopicConfig myTopics myTopicConfig
-    let urgency
-            | True = withUrgencyHook FocusHook
-            | True = withUrgencyHook NoUrgencyHook
-    xmonad . ewmh . urgency . myConfig
-        =<< mapM xmobarScreen =<< getScreens
- 
-sofficeToolbox = className =? "OpenOffice.org 3.1"
-                <&&> isInProperty "WM_PROTOCOLS" "WM_TAKE_FOCUS"
- 
-myConfig hs = let c = defaultConfig {
-      layoutHook = myLayout
-    , focusFollowsMouse = False
-    , focusedBorderColor = "#ddaadd"
-    , normalBorderColor = "#552255"
-    , borderWidth = 3
-    , startupHook = do
-        return () -- supposedly to avoid inf. loops with checkKeymap
-        checkKeymap (myConfig []) (myKeys c)
-    , terminal = "urxvtc -fg \\#ddaadd -bg \\#000011"
-    , modMask = mod4Mask
-    , logHook = do
-        multiPP'
-            (mergePPOutputs [XMonad.Actions.TopicSpace.pprWindowSet myTopicConfig,
-                             dynamicLogString . onlyTitle])
-            myPP
-            myPP{ ppTitle = const "" }
-            hs
-        updatePointer (TowardsCentre 0.2 0.2)
-        fadeInactiveLogHook 0.69
-    , handleEventHook = ewmhDesktopsEventHook <+> fullscreenEventHook <+> focusFollow <+>
-                    (\e -> case e of
-                        PropertyEvent{ ev_window = w } -> do
-                            isURXVT <- runQuery (className =? "URxvt") w
-                            if not isURXVT then hintsEventHook e else return (All True)
-                        _ -> return (All True))
-    , workspaces = myTopics
-    , manageHook = mconcat
-                    [manageSpawn
-                    ,isFullscreen --> doFullFloat
-                    -- ,className =? "MPlayer" --> doFullFloat
-                    ,className =? "XTerm" --> queryMerge (className =? "XTerm")
-                    ,manageDocks
-                    ]
-    } in additionalKeysP c (myKeys c)
- 
-myXPConfig :: XPConfig
-myXPConfig = greenXPConfig { font = "xft:Profont:pixelsize=15:autohint=true" }
- 
+myTerminal      = "urxvtc -rv"
+
+myFocusFollowsMouse :: Bool
+myFocusFollowsMouse = True
+myBorderWidth   = 3
+myModMask       = mod4Mask
+
+
+myNormalBorderColor  = "#222222"
+myFocusedBorderColor = "#FFBF62"
+wasd = [xK_w,xK_a,xK_s,xK_d,xK_q,xK_e]
+hjkl = [xK_h,xK_j,xK_k,xK_l,xK_n,xK_p]
+myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+    [((modm .|. shiftMask, xK_Return), spawn =<< asks (terminal . config))]
+    ++ 
+    zipWith (\key cmd ->
+            ((modm .|. shiftMask, key), sendMessage (G.ToEnclosing (SomeMessage cmd))))
+          hjkl [Le, Do, Up, Ri]
+    ++
+    [((modm, xK_j)      , focusDown)
+    ,((modm, xK_k)      , focusUp)
+    ,((modm, xK_h)      , swapMaster ) -- make master
+    ,((modm, xK_l)      , focusMaster ) -- goto master 
+    ,((modm, xK_space)  , sendMessage NextLayout)
+    ,((modm, xK_Return) , swapGroupMaster)
+    ,((modm .|. shiftMask, xK_c), kill)
+    ,((modm, xK_f), promptedGoto)
+    ]
+    ++
+    zipWith (\key cmd ->
+            ((modm, key), focusNumGroup cmd))
+            wasd [0,2,3,1]
+    ++
+    zipWith (\key name ->
+            ((modm .|. controlMask, key), switchTopic myTopicConfig name))
+            wasd myTopics
+    ++
+    [((modm, xK_period) , splitGroup)
+    ,((modm .|. shiftMask, xK_a), moveToGroupUp True)
+    ,((modm .|. shiftMask, xK_d), moveToGroupDown True)
+    ,((modm, xK_Tab), nextScreen)
+    ]
+    
+        
+
+        
+
+-- -------------------[ Action.TopicSpace ]----------------
+
+-- -----------------------------------------------------{{{
+
+myTopics :: [Topic]
+myTopics =  [ "a"
+            , "primary"
+            , "secondary"
+            , "documentation"
+            , "timebox"
+            , "journal"
+            , "media"
+            , "work"
+            , "system"
+            ]
+home = "/home/dave"
+
+spawnVimIn dir fnames = do
+        t <- asks (terminal . config)
+        spawnHere $ "cd " ++ dir ++ " && " ++ t ++ " -e vim " ++ 
+            (intercalate " " (map (dir </>) fnames))
+
+spawnVim fnames = do
+        dir <- currentTopicDir myTopicConfig 
+        spawnVimIn dir fnames
+    
+
+spawnShell = currentTopicDir myTopicConfig >>= spawnShellIn
+spawnShellIn dir = do
+    t <- asks (terminal . config)
+    spawnHere $ "cd " ++ dir ++ " && " ++ t 
+-- | TODO |--.----------------[ use tagbar shit  ]--------------------{{{
+-- once working tagbar should help  organize code
+
+-- | use tagbar shit 
+-- ----------.------[ 9bc27280-bbfc-47c8-9afe-ed12a66aecb0 ]----------}}}
+
 gsConfig = defaultGSConfig { gs_navigate = fix $ \self ->
     let navKeyMap = M.mapKeys ((,) 0) $ M.fromList $
                 [(xK_Escape, cancel)
@@ -151,322 +129,74 @@ gsConfig = defaultGSConfig { gs_navigate = fix $ \self ->
                 ,(xK_space , setPos (0,0))
                 ]
     in makeXEventhandler $ shadowWithKeymap navKeyMap (const self) }
- 
-data ExpandEdges a = ExpandEdges Int deriving (Read,Show)
- 
-instance LayoutModifier ExpandEdges Window where
-    modifyLayout (ExpandEdges n) ws (Rectangle x y w h) = let
-            bigRect = Rectangle (x - fromIntegral n) (y - fromIntegral n)
-                                (w + 2*fromIntegral n) (h + 2*fromIntegral n)
-        in
-        runLayout ws bigRect
- 
--- | push edges off-screen
-expandEdges n layout = ModifiedLayout (ExpandEdges n) layout
- 
- 
- 
--------------------- Layout ----------------------------------
-myLayout =
-        trackFloating . smartBorders
-        . avoidStruts
-        . onWorkspace "a" ((Tall 1 0.03 0.5) ||| Full)
-        . onWorkspace "primary" m
-        $ named "F" (noBorders Full) ||| s ||| Dishes 2 (1/6) ||| LayoutOne
-        where m = named "Main" 
-                . addTabs shrinkText defaultTheme
-                . onLeft (simpleDrawer 0.01 0.3 $ ClassName "urxvt")
-                $ mosaic 1.5 [7,5,2]
-              s = named "Space" -- space ship space out
-                $ (Tall 1 0.02 0.5)
--------------------- OG Layout ----------------------------------
---  myLayout =
---           trackFloating . smartBorders
---           . onWorkspace "movie" (magnifier m ||| layoutHints Full)
---           . avoidStruts
---           . onWorkspace "test" (multimastered 2 (1/100) (1/2) Grid)
---           . onWorkspace "gimp" (named "G" gimp)
---           . onWorkspace "xm-conf" ((nav $ ModifiedLayout (ExpandEdges 1) (Tall 1 0.3 0.5)) ||| Full)
---           $ m ||| named "F" (noBorders Full)
---      where nav = configurableNavigation (navigateColor "#ffff00")
---            m = named "M"
---              . lessBorders Screen
---              . layoutHintsToCenter
---              . addTabs shrinkText defaultTheme
---              . nav
---              . boringAuto
---              . subLayout [] (Simplest ||| simplestFloat)
---              $ mosaic 1.5 [7,5,2]
---            gimp = nav
---                 . onLeft (simpleDrawer 0.01 0.3 $ Role "browser")
---                 . withIM 0.15 (Role "gimp-dock")
---                 . addTabs shrinkText defaultTheme
---                 . nav
---                 . boringAuto
---                 . subLayout [] Simplest
---                 $ mouseResizableTile ||| Full
---------------------------------------------------------------
--------------------- Keys ------------------------------------
-myKeys c =
-    [("M-<Left>"   , withFocused $ snapMove L Nothing  )
-    ,("M-<Right>"  , withFocused $ snapMove R Nothing  )
-    ,("M-<Up>"     , withFocused $ snapMove U Nothing  )
-    ,("M-<Down>"   , withFocused $ snapMove D Nothing  )
-    ,("M-S-<Left>" , withFocused $ snapShrink R Nothing)
-    ,("M-S-<Right>", withFocused $ snapGrow   R Nothing)
-    ,("M-S-<Up>"   , withFocused $ snapShrink D Nothing)
-    ,("M-S-<Down>" , withFocused $ snapGrow   D Nothing)
- 
-    , ("M-l", withFocused (sendMessage . expandWindowAlt) >> sendMessage Expand)
-    , ("M-h", withFocused (sendMessage . shrinkWindowAlt) >> sendMessage Shrink)
- 
-    ,("M-;", withFocused (sendMessage . tallWindowAlt) >> sendMessage Taller)
-    ,("M-o", withFocused (sendMessage . wideWindowAlt) >> sendMessage Wider )
- 
-    ,("M-v", toggleFF)
--- ------------------------------------[ unsure ]---{{{
 
---  ,("M-S-b", restart "/home/aavogt/bin/obtoxmd" True)
---  ,("M-S-d", restart "urxvt -e xmonad" False)
--- |--------------- |
--- |  TODO | unsure |
--- ------[ d3bbda18-d03b-47dd-b306-cb874805e14f ]---}}} 
- 
-    ,("M-S-o"  , withFocused $ sendMessage . UnMerge   )
-    ,("M-S-C-o", withFocused $ sendMessage . UnMergeAll)
-    ,("M-C-m"  , withFocused $ sendMessage . MergeAll  )
-    ,("M-C-."  , onGroup W.focusDown')
-    ,("M-C-,"  , onGroup W.focusUp'  )
- 
-    ,("M-p",  shellPromptHere myXPConfig)
-    ,("M-x", submap $ M.fromList subMaps)
-    ,("M-g", submap $ defaultSublMap c  )
- 
-    ,("M-S-.", focusDown)
-    ,("M-S-,", focusUp  )
- 
-    ,("M-S-a", currentTopicAction myTopicConfig)
-    ,("M-a", warpToCentre >> goToSelected gsConfig)
-    -- workaround
-    ,("M-<Tab>", switchNthLastFocused myTopicConfig . succ . length . W.visible . windowset =<< get )
- 
-    ,("M-s"  , warpToCentre >> promptedGoto )
-    ,("M-m"  , warpToCentre >> gridTest )
-    ,("M-S-s", warpToCentre >> promptedShift)
- 
-    ,("M-b", sendMessage ToggleStruts)
-    ,("M-<Return>", dwmpromote)
-    ,("M-S-<Return>", spawnShell)
-    -- don't force a recompile, if nothing has changed (xmonad --recompile runs XMonad.recompile True)
-    ,("M-q", spawn "ghc -e ':m +XMonad Control.Monad System.Exit' -e 'flip unless exitFailure =<< recompile False' && xmonad --restart")
-    ,("M-S-q", io (exitWith ExitSuccess))
-    ,("<Print>",  spawn "scrot")
-    ]
-    ++
-    concatMap (\(m,f) -> lrud ("M-"++m) f)
-        [("S-"  , sendMessage . Swap)
-        ,("C-"  , sendMessage . pullGroup)
-        ,("S-C-", sendMessage . pushWindow)
-        ,(""    , sendMessage . Go)]
-    ++ mediaKeys ++
-    [("M-"++m++[key], screenWorkspace sc >>= flip whenJust (windows . f))
-        | (f, m) <- [(W.view, ""), (W.shift, "S-")]
-        , (key, sc) <- zip "wf" [0 .. ]]
-    ++
-    [ ("M-"++m++[k], a i)
-        | (a, m) <- [(switchNthLastFocused myTopicConfig,""),(shiftNthLastFocused, "S-")]
-        , (i, k) <- zip [1..] "123456789"]
- 
--- helper for windowNavigation keys
---    note: with colemak neiu are placed where jkli are with qwerty layout
-lrud :: String -> (Direction2D -> b) -> [(String, b)]
-lrud m cmd = zip ks cmds
-    where
-      ks   = map (\x -> m ++ [x]) "niue"
-      cmds = zipWith ($) (repeat cmd) [L,R,U,D]
- 
-subMaps = [((0, xK_o),  runOrRaisePrompt myXPConfig),
-           ((0, xK_p),  shellPromptHere myXPConfig),
-           ((0, xK_x), xmonadPrompt myXPConfig),
-           ((0, xK_z), sshPrompt myXPConfig),
-           ((shiftMask, xK_w), windowPromptGoto myXPConfig),
-           ((0, xK_w), promptSearch myXPConfig wikipedia),
-           ((0, xK_s), promptSearch myXPConfig multi),
-           ((0, xK_m), promptSearch myXPConfig mathworld),
-           ((0, xK_b), sendMessage ToggleStruts),
-           ((0, xK_f), withFocused $ windows . W.sink),
-           ((0, xK_v), refresh),
-           ((0, xK_c), asks config >>= spawnHere . terminal),
-           ((0, xK_k), kill)
-           ]
- 
- 
-amarok = False
- 
-mediaKeys = [("<XF86AudioPlay>", do mpcAct "toggle"; when amarok $ spawn "amarok -t"),
-             ("<XF86AudioStop>", promptHost),
-             ("<XF86AudioNext>", do mpcAct "next"; when amarok $ spawn "amarok -f"),
-             ("<XF86AudioPrev>", do mpcAct "prev"; when amarok $ spawn "amarok -r"),
-             ("<XF86AudioMute>", spawn "ossmix vmix0-outvol 0"),
-             ("<XF86AudioLowerVolume>",   spawn "amixer sset PCM 1-"),
-             ("<XF86AudioRaiseVolume>",   spawn "amixer sset PCM 1+"),
-             ("<XF86Sleep>", spawn "sudo pm-suspend")
-             ]
-    where mpcAct c = do
-            h <- XS.gets hostPrompt
-            spawn $ unwords ["export MPD_HOST="++h,";","mpc",c]
- 
--- Prompt for mpd host
-newtype HostPrompt = HostPrompt { hostPrompt :: String } deriving (Read,Show,Typeable)
-instance ExtensionClass HostPrompt where
-    initialValue = HostPrompt "/home/aavogt/.mpd/socket"
-    extensionType = PersistentExtension
- 
-instance XPrompt HostPrompt where showXPrompt _ = "Pick MPD Host: "
-promptHost = mkXPrompt (HostPrompt "") myXPConfig (return . compl) (XS.put . HostPrompt)
-    where compl s = nub $ filter (s `isPrefixOf`) ["127.0.0.1","dell"]
---------------------------------------------------------------
- 
-warpToCentre = gets (W.screen . W.current . windowset) >>= \x -> warpToScreen x  0.5 0.5
- 
--------------------- Support for per-screen xmobars ---------
--- Some parts of this should be merged into contrib sometime
-getScreens :: IO [Int]
-getScreens = openDisplay "" >>= liftA2 (<*) f closeDisplay
-    where f = fmap (zipWith const [0..]) . getScreenInfo
- 
-multiPP :: PP -- ^ The PP to use if the screen is focused
-        -> PP -- ^ The PP to use otherwise
-        -> [Handle] -- ^ Handles for the status bars, in order of increasing X
-                    -- screen number
-        -> X ()
-multiPP = multiPP' dynamicLogString
- 
-multiPP' :: (PP -> X String) -> PP -> PP -> [Handle] -> X ()
-multiPP' dynlStr focusPP unfocusPP handles = do
-    state <- get
-    let pickPP :: WorkspaceId -> WriterT (Last XState) X String
-        pickPP ws = do
-            let isFoc = (ws ==) . W.tag . W.workspace . W.current $ windowset state
-            put state{ windowset = W.view ws $ windowset state }
-            out <- lift $ dynlStr $ if isFoc then focusPP else unfocusPP
-            when isFoc $ get >>= tell . Last . Just
-            return out
-    traverse put . getLast
-        =<< execWriterT . (io . zipWithM_ hPutStrLn handles <=< mapM pickPP) . catMaybes
-        =<< mapM screenWorkspace (zipWith const [0..] handles)
-    return ()
- 
-mergePPOutputs :: [PP -> X String] -> PP -> X String
-mergePPOutputs x pp = fmap (intercalate (ppSep pp)) . sequence . sequence x $ pp
- 
-onlyTitle :: PP -> PP
-onlyTitle pp = defaultPP { ppCurrent = const ""
-                         , ppHidden = const ""
-                         , ppVisible = const ""
-                         , ppLayout = ppLayout pp
-                         , ppTitle = ppTitle pp }
- 
--- | Requires a recent addition to xmobar (>0.9.2), otherwise you have to use
--- multiple configuration files, which gets messy
-xmobarScreen :: Int -> IO Handle
-xmobarScreen = spawnPipe . ("~/.cabal/bin/xmobar -x " ++) . show
- 
-myPP :: PP
-myPP = sjanssenPP { ppLayout = xmobarColor "orange" "", ppUrgent = xmobarColor "red" "" . ('^':) }
---------------------------------------------------------------
- 
--------------------- X.Actions.TopicSpace --------------------
-myTopics :: [Topic]
-myTopics =
-  [ "a"
-  , "primary"
-  , "secondary"
-  , "documentation"
-  , "timebox"
-  , "journal"
-  , "media"
-  , "work"
-  , "system"
-  ]
-home = "/home/dave" 
- 
-myTopicConfig = TopicConfig
-  { topicDirs = M.fromList $
-      [ ("a", "./")
-      , ("primary", home </> ".timebox/primary")
-      , ("secondary", home </> ".timebox/secondary")
-      , ("documentation", home </> "notebook")
-      , ("timebox", home </> ".timebox")
-      , ("media",  home </> "data")
-      ]
-  , defaultTopicAction = const $ spawnShell >*> 2
-  , defaultTopic = "a"
-  , maxTopicHistory = 10
-  , topicActions = M.fromList $
-      [ ("a", spawnShell)
-      , ("primary"    , spawnShell >*> 2)
-      ]
-  }
- 
--- From the sample config in TopicSpace, these should probably be exported from that module
-spawnShell = currentTopicDir myTopicConfig >>= spawnShellIn
- 
-spawnShellIn dir = do
-    -- color <- randomBg' (HSV 255 255)
-    t <- asks (terminal . config)
-    spawnHere $ "cd " ++ dir ++ " && " ++ t -- ++ " -bg " ++ color
- 
-wsgrid = gridselect gsConfig <=< asks $ map (\x -> (x,x)) . workspaces . config
+wsgrid = gridselect gsConfig <=< asks $ 
+    map (\x -> (x,x)) . workspaces . config
  
 promptedGoto = wsgrid >>= flip whenJust (switchTopic myTopicConfig)
  
 promptedShift = wsgrid >>= \x -> whenJust x $ \y -> windows (W.greedyView y . W.shift y)
 
--- -------------------------[ gridselect of gridselect ]---{{{
-nameAction = [("one", gridTest)
-             ,("two", gridTest')
-             ]
-gridTest = runSelectedAction gsConfig nameAction
-gridTest' = gets (current . windowset
+myTopicConfig :: TopicConfig
+myTopicConfig = defaultTopicConfig
+    { topicDirs = M.fromList $
+         [("a"             , home)
+         ,("timebox"       , home </> ".timebox")
+         ,("primary"       , home </> ".timebox/primary")
+         ,("secondary"     , home </> ".timebox/secondary")
+         ,("documentation" , home </> "notebook")
+         ,("journal"       , home </> "notebook/journal")
+         ,("media"         , home </> "data")
+         ,("work"          , home)
+         ,("system"        , home </> ".admin")
+         ]
+    , defaultTopicAction = const $ spawnShell >*>  4
+    , defaultTopic = "a"
+    , topicActions = M.fromList $
+         [("primary", primaryTools)
+         ]
+    }
+primaryTools = do
+        spawnVim ["DaZip.hs"]
+        spawnVim ["bucket_list.txt", "_README.txt"]
+        dir <- currentTopicDir myTopicConfig
+        t <- asks (terminal . config)
+        spawnHere $  "cd " ++ dir ++ " && " ++ t ++ " -e ranger"
+        spawnShell 
 
--- |--------------------------------- |
--- |  TODO | gridselect of gridselect |
--- -------------[ d9634bf8-2136-404c-9802-2a5bb616a9c6 ]---}}}
---------------------------------------------------------------------------------
- 
---------------------------------------------------------------------------------
--- A nice little example of extensiblestate
-newtype FocusFollow = FocusFollow {getFocusFollow :: Bool } deriving (Typeable,Read,Show)
-instance ExtensionClass FocusFollow where
-    initialValue = FocusFollow True
-    extensionType = PersistentExtension
- 
--- this eventHook is the same as from xmonad for handling crossing events
-focusFollow e@(CrossingEvent {ev_window=w, ev_event_type=t})
-                | t == enterNotify, ev_mode e == notifyNormal =
-        whenX (XS.gets getFocusFollow) (focus w) >> return (All True)
-focusFollow _ = return (All True)
- 
-toggleFF = XS.modify $ FocusFollow . not . getFocusFollow
---------------------------------------------------------------------------------
- 
-{- | Sometimes this picks the wrong element to merge into (that is, not the
-'focused' element of the group), and SubLayouts breaks up the whole group
--}
-queryMerge pGrp = do
-    w <- ask
-    aws <- liftX $ filterM (runQuery pGrp) =<< gets
-        (W.integrate' . W.stack . W.workspace . W.current . windowset)
- 
-    let addRem = False -- run the query with window removed??
-    when addRem
-        (liftX $ modify (\ws -> ws { windowset = W.insertUp w (windowset ws) }))
-    liftX $ windows (W.insertUp w)
- 
-    mapM_ (liftX . sendMessage . XMonad.Layout.SubLayouts.Merge w) aws
- 
-    when addRem
-        (liftX $ modify (\ws -> ws { windowset = W.delete' w (windowset ws) }))
- 
-    idHook
+
+--------------------------------------------------------}}}
+
+focusNumGroup n = do
+        focusGroupMaster
+        replicateM_ n focusGroupDown
+
+
+displayNum n stack = let win = head $ drop n $ W.index stack
+                         in W.focusWindow win stack
+
+
+myLayout = G.group Full (LayoutOne (0.33,0.33)) ||| Full ||| tiled  where
+    tiled   = Tall nmaster delta ratio
+    nmaster = 1
+    ratio   = 1/2
+    delta   = 3/100
+
+
+
+myStartupHook = return ()
+
+main = xmonad defaults
+
+defaults = defaultConfig {
+        terminal           = myTerminal,
+        focusFollowsMouse  = myFocusFollowsMouse,
+        borderWidth        = myBorderWidth,
+        modMask            = myModMask,
+        workspaces         = myTopics,
+        normalBorderColor  = myNormalBorderColor,
+        focusedBorderColor = myFocusedBorderColor,
+        keys               = myKeys,
+        layoutHook         = myLayout,
+        startupHook        = myStartupHook
+    }
