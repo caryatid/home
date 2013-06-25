@@ -8,6 +8,6 @@
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 export LANG=en_US.UTF-8
-export PATH=/home/dave/.cabal/bin:${PATH}
+export PATH=${HOME}:${HOME}/.xmonad:/home/dave/.cabal/bin:${PATH}
 export EDITOR=vim
 export TERMCMD=urxvtc

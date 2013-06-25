@@ -13,6 +13,7 @@ set hidden
 set viminfo='1000,f1,<500,:100,@100,/100
 set noswapfile
 set autowrite
+set nowrap
 
 """""------------------||------------------}}}
 "" end: general setup
@@ -58,12 +59,12 @@ if has("gui_running")
 endif
 nnoremap <leader><space> :noh<cr>
 set foldmethod=marker
-set foldtext=myFoldText()
+set foldtext=foldtext()
 function! MyFoldText()
     let line = getline(v:foldstart)
     let foo = line 
-    "substitute(line, '\{', '', 'g')
-    return foo
+    substitute(foo, '[^[:alnum:]]', '', 'g')
+    return v:folddashes . foo
 endfunction
 
 """""--------------------------------------}}}
@@ -153,6 +154,9 @@ let g:NERDCustomDelimiters={
 """""""""
 "" haskell mode
 " au BufEnter *.hs compiler ghc
+autocmd FileType haskell compiler hlint
+let g:haskell_autotags=1
+let g:haskell_tags_generator="hasktags"
 let g:haddock_browser="/usr/bin/chromium"
 let g:haddock_docdir="/home/dave/code/doc/haskell/libraries"
 let g:haddock_indexfiledir="/home/dave/.haddock_index"

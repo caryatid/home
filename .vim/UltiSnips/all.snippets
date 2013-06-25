@@ -33,16 +33,17 @@ def message_bar(ln, msg=""):
     if len(msg) > (ln - 8):
         retval = ['start over, buddy']
     else:
-        retval = '{mark}{message:{fill}>{width}}---'.format(mark="-- ", message="[ " + msg + " ]", fill='-', width=ln)
+        retval = '{mark}{message:{fill}^{width}}---'.format(
+            mark="--.", message="[ " + msg + " ]", fill='-', width=ln)
     return retval
 endglobal
 snippet TODO "easily enter todo system records" !
-`!p
+-- | TODO |`!p
 snip.rv = message_bar(53, t[1])`{{{
 ${0}
--- |---------${1/./-/g} |
--- |  TODO | ${1} |
-`!p
+
+-- | ${1}
+-- --------`!p
 import datetime
 import getpass
 if not snip.c:

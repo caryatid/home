@@ -1,69 +1,59 @@
-module Main where
-
 import Yi
-import Yi.Keymap
-import Yi.Keymap.Vim 
-import Yi.Snippets
+
+-- Preamble
+import Yi.Prelude
+import Prelude (take, length, repeat)
+import Yi.Command
+import Yi.Mode.Buffers
+import Yi.Keymap.Vim(mkKeymap,defKeymap,ModeMap(..))
+
+import Data.Time.Clock(getCurrentTime)
+import System.Locale(defaultTimeLocale)
+import Data.Time.Format(formatTime)
+
+import Yi.UI.Vty (start)
+-- import Yi.UI.Cocoa (start)
+-- import Yi.UI.Pango (start)
+
+-- Used in Theme declaration
+import Data.Monoid(mappend)
+
+myTheme = defaultTheme `override` \super _ -> super
+  { modelineAttributes   = emptyAttributes { foreground = darkblue,
+           background = blue}
+  , tabBarAttributes     = emptyAttributes { foreground = white, background = darkred            }
+  , baseAttributes       = emptyAttributes { foreground = cyan, background = black, bold=True }
+  , commentStyle         = withFg blue `mappend` withBd False `mappend` withItlc True
+--  , selectedStyle        = withFg black   `mappend` withBg green `mappend` withReverse True
+  , selectedStyle        = withReverse True
+  , errorStyle           = withBg red     `mappend` withFg white
+  , operatorStyle        = withFg brown   `mappend` withBd False
+  , hintStyle            = withBg brown   `mappend` withFg black
+  , modelineFocusStyle  = withBg white  `mappend` withFg red
+  , importStyle          = withFg blue
+  , dataConstructorStyle = withFg blue
+  , typeStyle            = withFg blue
+  , keywordStyle         = withFg yellow
+  , builtinStyle         = withFg brown
+  , strongHintStyle      = withBg brown   `mappend` withUnderline True
+  , stringStyle          = withFg brown   `mappend` withBd False
+  , preprocessorStyle    = withFg blue
+--  , constantStyle      = withFg cyan
+--  , specialStyle      = withFg yellow
+  }
+defaultUIConfig = configUI defaultVimConfig
 
 main :: IO ()
-main = yi $ defaultVimConfig {
-    defaultKm = myVimKeymap
+main = yi $ defaultVimConfig
+  {
+   -- Options:
+   configUI = defaultUIConfig
+     { 
+       configTheme = myTheme,       
+       configWindowFill = ' ' 
+                          -- '~'    -- Typical for Vim
+     }
+  }
 
-    -- install update handler for dependent snippet regions
-    ,bufferUpdateHandler = [updateUpdatedMarks] 
-}
-
-deleteSnippets = False
-
-myVimKeymap = mkKeymap $ defKeymap `override` \super self -> super {
-          v_ins_char  = (v_ins_char super ||> tabKeymap)
-                       <|> (ctrlCh 's' ?>>! moveToNextBufferMark deleteSnippets)
-        , v_ex_cmds = myExCmds
-        }
-        
-myExCmds = exCmds [ ("sd", const $ withEditor showDepMarks, Nothing) ]
-                  
-showDepMarks = withBuffer0 (getA bufferDynamicValueA >>= 
-                            Prelude.mapM markRegion Yi.. Yi.concat Yi.. marks) >>=
-               printMsg Yi.. show
-
-tabKeymap = superTab True $ fromSnippets deleteSnippets $
-    [ ("test", testSnippet)
-    , ("hc", haskellComment)
-    , ("ts2", testSnippet2)
-    , ("ts3", testSnippet3)
-    , ("ts4", testSnippet4)
-    ]
-
-haskellComment :: SnippetCmd ()
-haskellComment = snippet $
-    "{-" & (cursor 1) & "\n-}"
-
-testSnippet :: SnippetCmd ()
-testSnippet = snippet $
-    "if ( " & (cursorWith 1 "...") & " ) {\n" &
-    "\t" & (cursorWith 2 "/* code */") &
-    "\n}\n" & (cursor 3)
-    
-testSnippet2 :: SnippetCmd ()
-testSnippet2 = snippet $
-  (cursorWith 2 "abcdef") & "\n" &
-  (dep 2) & "\ndef" &
-  (cursor 1)
-
-testSnippet3 :: SnippetCmd ()
-testSnippet3 = snippet $ 
-    "for(int " & (cursorWith 2 "ab") & " = 0; " &
-         (dep 2) & " < " & (cursorWith 1 "arr") & ".length;" &
-         (dep 2) & "++) {\n" &
-    "\t" & (cursorWith 3 "/* code */") &
-    "\n}\n" & (cursor 4)
-
-testSnippet4 :: SnippetCmd ()
-testSnippet4 = snippet $ 
-    "for(int " & (cursorWith 1 "ab") & " = 0; " &
-         (dep 1) & " < " & (cursorWith 2 "arr") & ".length;" &
-         (dep 1) & "++) {\n" &
-    "\t" & (cursorWith 3 "/* code */") &
-    "\n}\n" & (cursor 4)
-  
+-- | BUCKET | ---------------------------------------
+-- pipe IO shell
