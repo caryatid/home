@@ -45,15 +45,13 @@ defaultUIConfig = configUI defaultVimConfig
 
 main :: IO ()
 main = yi $ defaultVimConfig
-  {
-   -- Options:
-   configUI = defaultUIConfig
-     { 
-       configTheme = myTheme,       
-       configWindowFill = ' ' 
-                          -- '~'    -- Typical for Vim
+     {configUI = defaultUIConfig 
+        { configTheme = myTheme
+        , configLineWrap = False
+        , configWindowFill = '~' 
+        }
+     ,startFrontEnd = Yi.UI.Vty.start
      }
-  }
 
 -- | BUCKET | ---------------------------------------
 -- pipe IO shell

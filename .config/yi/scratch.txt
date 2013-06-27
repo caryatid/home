@@ -1,0 +1,2 @@
+minibuffer expansion
+word wrap

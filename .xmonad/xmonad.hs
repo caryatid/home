@@ -2,6 +2,7 @@
 
 
 import Control.Applicative
+import XMonad.Layout
 import XMonad.Layout.NoFrillsDecoration
 import XMonad.Layout.WindowNavigation
 import XMonad.Prompt.RunOrRaise
@@ -14,7 +15,6 @@ import Data.Colour.SRGB
 import Data.List
 import Data.Function
 import qualified Data.Map        as M
-import qualified XMonad.Layout.Groups as G
 import qualified XMonad.StackSet as W
 import System.Exit
 import System.FilePath
@@ -22,7 +22,6 @@ import XMonad
 import XMonad.Actions.GridSelect
 import XMonad.Actions.TopicSpace
 import XMonad.Actions.SpawnOn
-import XMonad.Layout.Groups.Helpers
 import XMonad.Layout.LayoutOne
 import XMonad.Util.ExtensibleState as XS
 
@@ -46,53 +45,37 @@ myXPConfig = defaultXPConfig
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 ------------------------------------------------------------
 -- | mvtoTopic w x                                                 
--- | chooseWindow  -- gridselect                                   
 -- | lastWorkspace
 -- | bucketList popup
 -----------------------------------------------------------------------
-    [((modm .|. shiftMask, xK_Return), spawn =<< asks (terminal . config))]
-    ++ 
-    -- | mvCursor dir -- amount?                                       
-    zipWith (\key cmd ->
-            ((modm .|. shiftMask, key), sendMessage (G.ToEnclosing (SomeMessage cmd))))
-          hjkl [Le, Do, Up, Ri]
-    ++
+    [((modm .|. shiftMask, xK_Return), spawn =<< asks (terminal . config))
     -- | cycleWindowInCompartment x                                   
-    [((modm, xK_j)      , focusDown)
-    ,((modm, xK_k)      , focusUp)
-    ,((modm, xK_h)      , swapMaster ) -- make master
-    ,((modm, xK_l)      , focusMaster ) -- goto master 
+    ,((modm, xK_j)      , windows W.focusDown)
+    ,((modm, xK_k)      , windows W.focusUp)
+    ,((modm, xK_h)      , windows W.swapMaster ) -- make master
+    ,((modm, xK_Return) , windows W.focusMaster )
     -- | changeLayout                                                  
     ,((modm, xK_space)  , sendMessage NextLayout)
+    ,((modm .|. shiftMask, xK_h), sendMessage Shrink)
+    ,((modm .|. shiftMask, xK_l), sendMessage Expand)
     -- | changeCompartmentLayout x                                     
     -- | TODO | Seems to fuck shit up 
-    ,((modm .|. shiftMask, xK_space), sendMessage $ G.ToFocused (SomeMessage NextLayout))
-    ,((modm, xK_Return) , swapGroupMaster)
     ,((modm .|. shiftMask, xK_c), kill)
+    -- | chooseWindow  -- gridselect                                   
+    ,((modm, xK_r), withSelectedWindow focus defaultGSConfig)
     -- | chooseTopic -- gridselect                                     
     ,((modm, xK_f), promptedGoto)
     -- | runCommand                                                    
     ,((modm, xK_x), runOrRaisePrompt myXPConfig)
     ]
     ++
-    -- | gotoCompartment x                                             
-    zipWith (\key cmd ->
-            ((modm, key), focusNumGroup cmd))
-            wasd [0,2,3,1]
-    ++
     -- | gotoTopic x                                                   
     zipWith (\key name ->
             ((modm .|. controlMask, key), switchTopic myTopicConfig name))
             wasd (tail myTopics)
     ++
-    [((modm, xK_period) , splitGroup)
-    -- | mvtoCompartment w x                                           
-    -- | TODO | make this actually use compartments by name
-    -- | -- This is the major reason for needing a different Groups.hs
-    -- | -- style module
-    ,((modm .|. shiftMask, xK_a), moveToGroupUp True)
-    ,((modm .|. shiftMask, xK_d), moveToGroupDown True)
-    ,((modm, xK_Tab), nextScreen)
+    [
+    ((modm, xK_Tab), nextScreen)
     ]
     
         
@@ -115,6 +98,7 @@ myTopics =  [ "automatic"
             , "work"
             ]
 home = "/home/dave"
+{-
 focusNumGroup n = do
         focusGroupMaster
         replicateM_ n focusGroupDown
@@ -122,7 +106,7 @@ focusNumGroup n = do
 
 displayNum n stack = let win = head $ drop n $ W.index stack
                          in W.focusWindow win stack
-
+-}
 spawnVimIn dir fnames = do
         t <- asks (terminal . config)
         spawnHere $ "cd " ++ dir ++ " && " ++ t ++ " -e vim " ++ 
@@ -145,6 +129,7 @@ spawnShellIn dir = do
 
 wsgrid = gridselect gsConfig <=< asks $ 
     map (\x -> (x,x)) . workspaces . config
+
  
 promptedGoto = wsgrid >>= flip whenJust (switchTopic myTopicConfig)
  
@@ -211,8 +196,7 @@ gsConfig = defaultGSConfig { gs_navigate = fix $ \self ->
 
 
 myLayout = 
-            G.group Full (LayoutOne (0.70,0.70)) ||| 
-                        windowNavigation tiled ||| Full where
+         Mirror (tiled) ||| windowNavigation tiled ||| Full where
                 tiled   = Tall nmaster delta ratio
                 nmaster = 1
                 ratio   = 1/2

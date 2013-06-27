@@ -1,5 +1,18 @@
 +|..................................// automatic bunny //---|{{{
  |TODO|  automatic bunny
+ | daily actions
+ +--------------
+    These are the *only* things that must happen each day.
+    concept is that these are the hub to which all else connects.
+    Their continued behavior holds all other actions in place.
+    
+    Trigger      | Action : Alternates... 
+    -------------------------------------
+    Wake         | Body >>= Mind 
+    Noon         | Home : Work >>= errands
+    After Dinner | Kitchen >>= record autobun
+
+
  | planning
  +---------
     Recording daily metrics. Free form ideas for those:

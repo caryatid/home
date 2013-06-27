@@ -74,11 +74,6 @@ data Mind a b c = Mind { context :: a
                        }
           
 
--- |------------- |
--- |  TODO | Mind |
--- ------[ 28c544c2-1a85-49bc-a4b5-467ec39885e6 ]---}}}
--- -------------------------------------[ world ]---{{{
---
 data WorldState  a b c = WorldState { world :: World a b c 
                              , mind :: Mind a b c 
                              }
@@ -92,37 +87,60 @@ data World a b c = World { objects :: a
                          , actions :: b
                          , minds :: c
                          }
+-- | sense
+-- | TODO | -----------------------
+--  sense is a lens, i think.     I don't know what lenses are yet :)
+--  but sense is a way of looking into a complex [ record syntax ] objects.
+--  Then returning a part of that object. Very analogous to record syntax, but
+--  perhaps with the ability to do something besides just retrieve data. For example, 
+--  modify the complex object, or the returned data?
+--  The point being that a sense is a transformation of WorldState to a specific
+--  [ likely a class ] type for that particular sense. 
+--  So human hearing is a transformation of WorldState to Sound by accessor 
+--  style `getting` the air vibration frequency at your location.
 
--- |-------------- |
--- |  TODO | world |
--- ------[ db682909-bdfb-4338-81e3-ab994dff0bd3 ]---}}}
 
---  | Notes
---  +------
---  perform :: WorldState a b c -> WorldState a b c
---   Mind performs once a quanta.
---   perform needs categories of sub actions like:
---      modifyMind -- as in, to study :: World affects Mind
---         practice: 
---          - goal = metric -- shortest distance etc
---          - unit = action
---         learn:
---          - goal = increased knowledge
---          - unit = destructed World parameters
---         experiment:
---          - goal = new knowledge
---          - unit = World
---      modifyWorld -- as in, to create :: Mind affects World
---         create:
---          - goal = idea
---          - unit = World
---         communicate:
---          - goal = gain/impart knowledge
---          - unit = mind knowledge, minds
---         separate:
---          - goal = parts of objects
---          - unit = World item
--- 
+{-
+     | Notes
+     +------
+     perform :: WorldState a b c -> WorldState a b c
+     Mind performs once a quanta.
+     perform needs categories of sub actions like:
+          modifyMind -- as in, to study :: World affects Mind
+             learn:
+              - goal = increased knowledge
+              - unit = destructed World parameters
+                    -- | concept is (modify self)  -> self
+                    -- |            (modify world) -> self
+                     practice: 
+                      - goal = metric -- shortest distance etc
+                      - unit = action
+                     experiment:
+                      - goal = new knowledge
+                      - unit = World
+             invent:
+              - goal = new ideas
+              - unit = current knowledge
+                     planning:
+                     analyzing: -- discovering the gaps where inventions fit 
+          modifyWorld -- as in, to create :: Mind affects World
+             create:
+              - goal = idea
+              - unit = environment
+                    -- | concept is (modify self)  -> world
+                    -- |            (modify world) -> world
+                     move:    
+                     build:
+             separate:
+              - goal = parts of objects
+              - unit = objects
+                     invetigate: -- make self different to view something
+                                 -- somewhat analagous to glasses
+                     disassemble:
+                                 -- actually break something apart
+                     
+-}
+     
 
 -- | Maintenance cycles
 -- +-------------------
@@ -139,3 +157,5 @@ data World a b c = World { objects :: a
 -- |------------------------ |
 -- |  TODO | Outside Context |
 -- -------------[ 3942e75c-cda0-41f7-b36e-6f623089d739 ]---}}}
+
+
