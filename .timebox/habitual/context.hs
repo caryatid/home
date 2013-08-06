@@ -60,7 +60,7 @@ import Control.Monad.State
 -- in. When free, imagination lives. Tastes are
 -- generally features of the world. They can
 -- be for something not of the world. These 
--- rare tasets can create WorldStates 
+-- rare tastes can create WorldStates 
 -- unlike the Mind.
 --
 
@@ -138,6 +138,7 @@ data World a b c = World { objects :: a
                                  -- somewhat analagous to glasses
                      disassemble:
                                  -- actually break something apart
+
                      
 -}
      

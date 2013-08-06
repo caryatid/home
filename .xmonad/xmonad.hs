@@ -1,31 +1,32 @@
 {-# LANGUAGE MultiParamTypeClasses,DeriveDataTypeable, FlexibleInstances #-}
 
 
+
 import Control.Applicative
-import XMonad.Layout
-import XMonad.Layout.NoFrillsDecoration
-import XMonad.Layout.WindowNavigation
-import XMonad.Prompt.RunOrRaise
-import XMonad.Prompt
-import XMonad.Actions.CycleWS
 import Control.Monad
 import Data.Colour as DC
 import Data.Colour.Names
 import Data.Colour.SRGB
-import Data.List
 import Data.Function
+import Data.List
 import qualified Data.Map        as M
 import qualified XMonad.StackSet as W
 import System.Exit
 import System.FilePath
 import XMonad
+import XMonad.Actions.CycleWS
 import XMonad.Actions.GridSelect
-import XMonad.Actions.TopicSpace
 import XMonad.Actions.SpawnOn
+import XMonad.Actions.TopicSpace
+import XMonad.Layout
 import XMonad.Layout.LayoutOne
+import XMonad.Layout.Mosaic
+import XMonad.Layout.NoFrillsDecoration
+import XMonad.Layout.WindowNavigation
+import XMonad.Prompt
+import XMonad.Prompt.RunOrRaise
 import XMonad.Util.ExtensibleState as XS
-
-myTerminal      = "urxvtc -rv"
+myTerminal      = "sakura"
 
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
@@ -54,10 +55,17 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ,((modm, xK_k)      , windows W.focusUp)
     ,((modm, xK_h)      , windows W.swapMaster ) -- make master
     ,((modm, xK_Return) , windows W.focusMaster )
+    ,((modm, xK_t)      , withFocused $ windows . W.sink) 
     -- | changeLayout                                                  
     ,((modm, xK_space)  , sendMessage NextLayout)
     ,((modm .|. shiftMask, xK_h), sendMessage Shrink)
     ,((modm .|. shiftMask, xK_l), sendMessage Expand)
+    ,((modm .|. shiftMask, xK_j), sendMessage Taller)
+    ,((modm .|. shiftMask, xK_k), sendMessage Wider)
+    ,((modm .|. shiftMask, xK_r), sendMessage Reset)
+    ,((modm, xK_comma)  ,  sendMessage (IncMasterN (-1)))
+    ,((modm, xK_period) ,  sendMessage (IncMasterN 1))
+
     -- | changeCompartmentLayout x                                     
     -- | TODO | Seems to fuck shit up 
     ,((modm .|. shiftMask, xK_c), kill)
@@ -67,6 +75,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ,((modm, xK_f), promptedGoto)
     -- | runCommand                                                    
     ,((modm, xK_x), runOrRaisePrompt myXPConfig)
+    ,((modm, xK_Tab), nextScreen)
     ]
     ++
     -- | gotoTopic x                                                   
@@ -74,13 +83,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
             ((modm .|. controlMask, key), switchTopic myTopicConfig name))
             wasd (tail myTopics)
     ++
-    [
-    ((modm, xK_Tab), nextScreen)
-    ]
-    
-        
-
-        
+    zipWith (\key name ->
+            ((modm, key), sendMessage $ Go name)) wasd [U,L,D,R]
 
 -- -------------------[ Action.TopicSpace ]----------------
 
@@ -196,8 +200,9 @@ gsConfig = defaultGSConfig { gs_navigate = fix $ \self ->
 
 
 myLayout = 
-         Mirror (tiled) ||| windowNavigation tiled ||| Full where
+        Mirror (tiled) ||| tiled ||| Full where
                 tiled   = Tall nmaster delta ratio
+                {- tiled   = windowNavigation $ mosaic 2 [3,2] -}
                 nmaster = 1
                 ratio   = 1/2
                 delta   = 3/100

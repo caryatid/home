@@ -60,8 +60,20 @@ arrange (x,y) (Rectangle rx ry rw rh) st = zip st recs where
 -- | BUCKET | ------------------------------------------
 {- 
 -- | TODO | Check out get list of indexes
-    onlyTheLonely gets a items from a list by index derived from 
-    a list of indexes -- there must be a better way
+lets imagine buckets of windows with only the top showing overlayed on the integration of  the StackSet
+[    0    |    1    |    2    |    3    |    4    |    5    |    6    |    7    |    8    ]
+[    -    a    -    ][   -    -    b    -    -    ][   -    -    -    c    -    -    -    ]
+                    2                             5                    
+
+-- | operations |--
+
+focusPort :: p -> X ()
+winToPort :: p -> w -> X ()
+nextWin :: X ()
+portNextWin :: p -> X ()
+
+
+
 -}
 
    

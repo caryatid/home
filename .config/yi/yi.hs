@@ -51,7 +51,17 @@ main = yi $ defaultVimConfig
         , configWindowFill = '~' 
         }
      ,startFrontEnd = Yi.UI.Vty.start
+     ,modeTable = fmap (onMode $ prefIndent) (modeTable defaultVimConfig)
      }
+prefIndent :: Mode s -> Mode s
+prefIndent m = m 
+            {
+        modeIndentSettings = IndentSettings
+                { expandTabs = True
+                , shiftWidth = 4
+                , tabSize    = 4
+                }
+            }
 
 -- | BUCKET | ---------------------------------------
 -- pipe IO shell
