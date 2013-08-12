@@ -19,10 +19,12 @@ import XMonad.Actions.GridSelect
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.TopicSpace
 import XMonad.Layout
+import XMonad.Layout.LayoutModifier
 import XMonad.Layout.LayoutOne
 import XMonad.Layout.Mosaic
 import XMonad.Layout.NoFrillsDecoration
 import XMonad.Layout.WindowNavigation
+import XMonad.Layout.PerWorkspace
 import XMonad.Prompt
 import XMonad.Prompt.RunOrRaise
 import XMonad.Util.ExtensibleState as XS
@@ -30,12 +32,12 @@ myTerminal      = "sakura"
 
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
-myBorderWidth   = 3
+myBorderWidth   = 12
 myModMask       = mod4Mask
 
 
 myNormalBorderColor  = "#222222"
-myFocusedBorderColor = "#FFBF62"
+myFocusedBorderColor = "#0a8"
 wasd = [xK_w,xK_a,xK_s,xK_d,xK_q,xK_e]
 hjkl = [xK_h,xK_j,xK_k,xK_l,xK_n,xK_p]
 myXPConfig = defaultXPConfig 
@@ -226,5 +228,7 @@ defaults = defaultConfig {
         startupHook        = myStartupHook
     }
 -- | BUCKET | ----------------------------------------------------
--- - per Compartment Layout
--- - xmobar for each compartment
+-- per Compartment Layout
+-- xmobar for each compartment
+-- XMonad.Action.Plane
+-- Border color for each workspace

@@ -65,3 +65,6 @@ prefIndent m = m
 
 -- | BUCKET | ---------------------------------------
 -- pipe IO shell
+-- colorscheme as I want it
+-- general key bindings
+--     nohls

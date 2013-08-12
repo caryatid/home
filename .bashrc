@@ -7,6 +7,7 @@
 set -o vi
 
 alias ls='ls --color=auto'
+alias xargs="xargs -I '{}' "
 PS1='[\u@\h \W]\$ '
 export LANG=en_US.UTF-8
 export PATH=${HOME}:${HOME}/prog/bin:${HOME}/.xmonad:/home/dave/.cabal/bin:${PATH}
