@@ -24,74 +24,68 @@
 
     TimeView must be a list structure that holds data and maybe sub-timeviews
 
-    TimeView is a list like structure of concurrent TimeLines
-    [TimeLine] is a list of sequential actions
 -}
+import qualified Data.Map as M
 
-type TDuration =  Int 
-type TTitle = String
+-- | types so they can like change and stuff
+type TimeName = String
+type TimeLen  = Int
 
-data TimeLine = TimeLine { tLen :: TDuration
-                         , tNam :: TTitle
-                         , subT :: Maybe TimeView
+type TimeView = [(M.Map TimeName TimeLine)] 
+data TimeLine = TimeLine { tLen  :: TimeLen
+                         , tSub  :: TimeView
                          }
-                         deriving(Show)
+                         deriving Show
+-- | test data
+tFromList x =  [M.fromList x]
+timeEmpty =  [M.empty]
+test_line = tFromList [("world", (TimeLine 10 pursuit))
+                      ] ++ tFromList [("self" , (TimeLine 12 song))]
 
--- | should change [TimeLine] to be 'a' so changes are possible
-data TimeView = TimeV [[TimeLine]]
-                    deriving(Show)
-test_tv = TimeV [[pursuit], [sublime], [song]]
+pursuit = tFromList [("game", (TimeLine 2 gurgeh))
+                    ,("dba",  (TimeLine 5 timeEmpty))
+                    ,("assurance", (TimeLine 23 timeEmpty))
+                    ] ++
+                    tFromList [("text", (TimeLine 7 timeEmpty))
+                              ,("wasd", (TimeLine 4 timeEmpty))
+                              ]
+gurgeh = tFromList [("haskell road", (TimeLine 44 timeEmpty))
+                   ,("Xmonad", (TimeLine 5 timeEmpty))
+                   ]
 
-pursuit = (TimeLine 10 "pursuit" (Just subPur))
-sublime = (TimeLine 5 "sublime" (Just subSub))
-song = (TimeLine 30 "song" (Just subSel))
-
-subPur =  TimeV [[ (TimeLine 10 "game" (Just gurgeh))
-                 , (TimeLine 20 "dba"  Nothing)
-                 , (TimeLine 30 "high assurance" Nothing)
+song = tFromList [("song1", (TimeLine 7 timeEmpty))
+                 ,("song2", (TimeLine 13 timeEmpty))
                  ]
-                ,[ (TimeLine 23 "test" Nothing)
-                 , (TimeLine 32 "test2" Nothing)
-                 ]
-                ]
 
-subSub =  TimeV [[ (TimeLine 23 "edit" Nothing)
-                , (TimeLine 13 "wasd" Nothing)
-                ]]
+getLength :: TimeView -> TimeLen
+getLength tvs = foldl max 0 $ map lenDepth tvs
+    where
+         lenDepth tv =  M.fold foo 0 tv 
+         foo t a  = (getLength (tSub t)) + (tLen t) + a 
+         
 
-subSel =  TimeV [[ (TimeLine 15 "song1" Nothing)
-                , (TimeLine 23 "song2" Nothing)
-                , (TimeLine 33 "song3" Nothing)
-                ]]
+getTimeLine :: TimeView -> [String]
+getTimeLine tvs = map pLine tvs
+    where pLine m = M.foldWithKey toS "" m
+          toS k t a = a ++ (take ((tLen t) + (getLength $ tSub t)) $ k ++ (repeat '-')) ++ ">" 
 
-gurgeh = TimeV [[ (TimeLine 10 "haskell book" Nothing)
-                , (TimeLine 23 "XMonad" (Just foo))
-                , (TimeLine 27 "Typeclassopedia" Nothing)
-                ]]
+timeToTable :: TimeView -> [((TimeName, TimeLen), [(TimeName, TimeLen)])]
+-- | world |--->game----->dba----->assurance
+-- | world |--->text--->wasd------>
+-- | self  |------>song1--->song2------->
+-- represented like 
+-- [(world, 3), [(game, 10), (dba, 23), (assurance, 23)]
+-- ,(world, 3), [(text, 8), (wasd, 12)]
+-- ,(self, 5), [(song1, 12), (song2, 23)]
+-- ]
+          
+timeToTable tvs = foldr f [] tvs
+    where f tv a     = M.foldWithKey g [] tv ++ a
+          g k tl b   = b ++ zipWith h (repeat (k, tLen tl)) (tSub tl)
+          h t tv     = (t, M.foldWithKey j [] tv)
+          j n tl' c  = c ++ [(n, ((tLen tl') + (getLength $ tSub tl')))]
 
-foo = TimeV [[ (TimeLine 33 "grue" Nothing)]]
 
-pTimeLine :: String -> Int -> String
-pTimeLine n l
-          | (length n) > l = take l n
-          | otherwise = let dashes = l - (length n)
-                            in n ++ (replicate dashes '-')
-
-disTLine :: [TimeLine] -> String
-disTLine tls = foldr (\x y -> (pTimeLine (tNam x) (getDuration x)) ++ ">" ++ y) [] tls
-
-
-test :: [[TimeLine]] -> [TDuration]
-test xs = map (\tls -> foldr (+) 0 $ map getDuration tls) xs
-
-getDuration :: TimeLine -> TDuration
-getDuration (TimeLine t n (Nothing)) = t
-getDuration (TimeLine t n (Just (TimeV tls))) = let maxSub = foldr max 0 $ test tls
-                                                    in t + maxSub  
-
-timeToList :: TimeLine -> String
-timeToList (TimeLine t n (Nothing)) = pTimeLine n t
-timeToList (TimeLine t n (Just (TimeV tls))) = (pTimeLine n t) ++ ">" ++ (unlines $ (map disTLine tls))
 main = do
     putStrLn "Starting"
 
