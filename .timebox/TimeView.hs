@@ -30,6 +30,7 @@ import qualified Data.Map as M
 -- | types so they can like change and stuff
 type TimeName = String
 type TimeLen  = Int
+type TimeTable = [((TimeName, TimeLen), [(TimeName, TimeLen)])]
 
 type TimeView = [(M.Map TimeName TimeLine)] 
 data TimeLine = TimeLine { tLen  :: TimeLen
@@ -39,8 +40,8 @@ data TimeLine = TimeLine { tLen  :: TimeLen
 -- | test data
 tFromList x =  [M.fromList x]
 timeEmpty =  [M.empty]
-test_line = tFromList [("world", (TimeLine 10 pursuit))
-                      ] ++ tFromList [("self" , (TimeLine 12 song))]
+test_line = tFromList [("world", (TimeLine 3 pursuit))
+                      ] ++ tFromList [("self" , (TimeLine 10 song))]
 
 pursuit = tFromList [("game", (TimeLine 2 gurgeh))
                     ,("dba",  (TimeLine 5 timeEmpty))
@@ -69,21 +70,35 @@ getTimeLine tvs = map pLine tvs
     where pLine m = M.foldWithKey toS "" m
           toS k t a = a ++ (take ((tLen t) + (getLength $ tSub t)) $ k ++ (repeat '-')) ++ ">" 
 
-timeToTable :: TimeView -> [((TimeName, TimeLen), [(TimeName, TimeLen)])]
--- | world |--->game----->dba----->assurance
--- | world |--->text--->wasd------>
--- | self  |------>song1--->song2------->
--- represented like 
--- [(world, 3), [(game, 10), (dba, 23), (assurance, 23)]
--- ,(world, 3), [(text, 8), (wasd, 12)]
--- ,(self, 5), [(song1, 12), (song2, 23)]
--- ]
-          
+tableToString :: TimeTable -> Int -> String
+tableToString tt w = unlines $ map f tt
+    where f ((t,l), s)   = take w $ "| " ++ (take 11 (t ++ (repeat ' '))) ++ " |"  ++
+                            (replicate l '-') ++ ">" ++ foldr g "" s
+          g (n, l) b = b ++ (take l (n ++ (repeat '-'))) ++ ">"
+
+tableScale :: TimeTable -> Int -> TimeTable
+tableScale tt x = map f tt
+    where f ((n, t), s) = ((n, t `div` x), map g s)
+          g (n, t)      = (n, t `div` x)
+
+timeToTable :: TimeView -> TimeTable
 timeToTable tvs = foldr f [] tvs
     where f tv a     = M.foldWithKey g [] tv ++ a
           g k tl b   = b ++ zipWith h (repeat (k, tLen tl)) (tSub tl)
           h t tv     = (t, M.foldWithKey j [] tv)
           j n tl' c  = c ++ [(n, ((tLen tl') + (getLength $ tSub tl')))]
+
+viewToScale :: TimeView -> Int -> Int -> String 
+-- | Int 1 is scale and Int 2 is width
+viewToScale tv s w = let table = tableScale (timeToTable tv) s
+                         runner = take w $ cycle "----|"
+                         header = take w $ concat $  map ((\z ->  z ++ "----") . show . head ) $ splitEvery s [0..]
+                        in header ++ "\n" ++ runner ++ "\n" ++ tableToString table w
+
+splitEvery _ [] = []
+splitEvery n list = first : (splitEvery n rest)
+    where
+        (first, rest) = splitAt n list
 
 
 main = do
