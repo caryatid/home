@@ -90,9 +90,11 @@ timeToTable tvs = foldr f [] tvs
 
 viewToScale :: TimeView -> Int -> Int -> String 
 -- | Int 1 is scale and Int 2 is width
-viewToScale tv s w = let table = tableScale (timeToTable tv) s
-                         runner = take w $ cycle "----|"
-                         header = take w $ concat $  map ((\z ->  z ++ "----") . show . head ) $ splitEvery s [0..]
+viewToScale tv s w = let table  = tableScale (timeToTable tv) s
+                         front   = "|-------------|" 
+                         runner = take w $ (front ++ cycle "----|")
+                         num    = concat $  map ((\z ->   "----" ++ z) . show . head ) $ splitEvery (s * 5) [0..]
+                         header = take w $ front ++ num
                         in header ++ "\n" ++ runner ++ "\n" ++ tableToString table w
 
 splitEvery _ [] = []
