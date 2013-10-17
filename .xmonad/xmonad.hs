@@ -23,7 +23,7 @@ import XMonad.Layout.LayoutModifier
 import XMonad.Layout.LayoutOne
 import XMonad.Layout.Mosaic
 import XMonad.Layout.NoFrillsDecoration
-import XMonad.Layout.WindowNavigation
+-- import XMonad.Layout.WindowNavigation
 import XMonad.Layout.PerWorkspace
 import XMonad.Prompt
 import XMonad.Prompt.RunOrRaise
@@ -36,7 +36,7 @@ myBorderWidth   = 12
 myModMask       = mod4Mask
 
 
-myNormalBorderColor  = "#222222"
+myNormalBorderColor  = "#000000"
 myFocusedBorderColor = "#0a8"
 wasd = [xK_w,xK_a,xK_s,xK_d,xK_q,xK_e]
 hjkl = [xK_h,xK_j,xK_k,xK_l,xK_n,xK_p]
@@ -67,7 +67,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ,((modm .|. shiftMask, xK_r), sendMessage Reset)
     ,((modm, xK_comma)  ,  sendMessage (IncMasterN (-1)))
     ,((modm, xK_period) ,  sendMessage (IncMasterN 1))
-
     -- | changeCompartmentLayout x                                     
     -- | TODO | Seems to fuck shit up 
     ,((modm .|. shiftMask, xK_c), kill)
@@ -84,9 +83,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     zipWith (\key name ->
             ((modm .|. controlMask, key), switchTopic myTopicConfig name))
             wasd (tail myTopics)
-    ++
-    zipWith (\key name ->
-            ((modm, key), sendMessage $ Go name)) wasd [U,L,D,R]
+--     ++
+--     zipWith (\key name ->
+--             ((modm, key), sendMessage $ Go name)) wasd [U,L,D,R]
 
 -- -------------------[ Action.TopicSpace ]----------------
 
