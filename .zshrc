@@ -10,3 +10,6 @@ zstyle :compinstall filename '/home/dave/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
+
+export PATH=$HOME/prog/bin:$HOME/.cabal/bin:$PATH
+export LANG=en_US.utf8

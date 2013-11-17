@@ -1,7 +1,0 @@
-Bash vs Zsh
------------
-zsh 
-
-Editor
-------
-sublime is looking really good

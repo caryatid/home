@@ -1,17 +1,0 @@
-
-yi.hs,342
-currentDate ::19,20
-currentDate =20,21
-makeUnderline ::25,26
-makeUnderline s26,27
-currentDateAndUnderline ::30,31
-currentDateAndUnderline =31,32
-insertCurrentDate ::35,36
-insertCurrentDate =36,37
-extendedVimKeymap =39,40
-myTheme =67,68
-prefIndent ::90,91
-prefIndent m91,92
-defaultUIConfig =104,105
-main ::106,107
-main =107,108
