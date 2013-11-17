@@ -6,10 +6,8 @@
 **/*.so
 **/*.pyo
 **/*.hi
-.config/[cC]hromium
-.config/transmission
-.config/ranger/history
-.config/geany/*_0
+.leo/.leoRecent*
+.leo/db*
 // end: general ignores
 ///////////////////////-----------------------/
 
